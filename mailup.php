@@ -61,7 +61,7 @@ class MailUp {
 	/** Does the access key expiration is being reset on use?
 	* @var bool
 	*/
-	const ACCESSKEY_RESET_DURATION_ON_USE = true;
+	const ACCESSKEY_RESET_DURATION_ON_USE = false;
 	/** MailUp username.
 	* @var string
 	*/
