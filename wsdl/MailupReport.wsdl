@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://services.mailupnet.it/WS" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://services.mailupnet.it/WS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://services.mailupnet.it/WS">
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pwd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pwd" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="consoleId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Logout">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogoutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LogoutResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportByUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="messageID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportByUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReportByUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportByUserEN">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="messageID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportByUserENResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReportByUserENResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportByMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="messageID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportByMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReportByMessageResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportByMessageEN">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="messageID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReportByMessageENResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReportByMessageENResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:LoginFromId" />
+  </wsdl:message>
+  <wsdl:message name="LoginFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapIn">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapOut">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReportByUserSoapIn">
+    <wsdl:part name="parameters" element="tns:ReportByUser" />
+  </wsdl:message>
+  <wsdl:message name="ReportByUserSoapOut">
+    <wsdl:part name="parameters" element="tns:ReportByUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReportByUserENSoapIn">
+    <wsdl:part name="parameters" element="tns:ReportByUserEN" />
+  </wsdl:message>
+  <wsdl:message name="ReportByUserENSoapOut">
+    <wsdl:part name="parameters" element="tns:ReportByUserENResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReportByMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:ReportByMessage" />
+  </wsdl:message>
+  <wsdl:message name="ReportByMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:ReportByMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReportByMessageENSoapIn">
+    <wsdl:part name="parameters" element="tns:ReportByMessageEN" />
+  </wsdl:message>
+  <wsdl:message name="ReportByMessageENSoapOut">
+    <wsdl:part name="parameters" element="tns:ReportByMessageENResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MailupReportSoap">
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginFromId">
+      <wsdl:input message="tns:LoginFromIdSoapIn" />
+      <wsdl:output message="tns:LoginFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input message="tns:LogoutSoapIn" />
+      <wsdl:output message="tns:LogoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReportByUser">
+      <wsdl:input message="tns:ReportByUserSoapIn" />
+      <wsdl:output message="tns:ReportByUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReportByUserEN">
+      <wsdl:input message="tns:ReportByUserENSoapIn" />
+      <wsdl:output message="tns:ReportByUserENSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReportByMessage">
+      <wsdl:input message="tns:ReportByMessageSoapIn" />
+      <wsdl:output message="tns:ReportByMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReportByMessageEN">
+      <wsdl:input message="tns:ReportByMessageENSoapIn" />
+      <wsdl:output message="tns:ReportByMessageENSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MailupReportSoap" type="tns:MailupReportSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginFromId">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/LoginFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportByUser">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/ReportByUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportByUserEN">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/ReportByUserEN" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportByMessage">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/ReportByMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportByMessageEN">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/ReportByMessageEN" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MailupReportSoap12" type="tns:MailupReportSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginFromId">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/LoginFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/Logout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportByUser">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/ReportByUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportByUserEN">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/ReportByUserEN" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportByMessage">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/ReportByMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportByMessageEN">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/ReportByMessageEN" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MailupReport">
+    <wsdl:port name="MailupReportSoap" binding="tns:MailupReportSoap">
+      <soap:address location="https://wsvc.ss.mailup.it/MailupReport.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MailupReportSoap12" binding="tns:MailupReportSoap12">
+      <soap12:address location="https://wsvc.ss.mailup.it/MailupReport.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

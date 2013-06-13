@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://ws.mailupnet.it/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://ws.mailupnet.it/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">MailUp WebService for subscribers import.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://ws.mailupnet.it/">
+      <s:element name="GetIdWsUser">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetIdWsUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIdWsUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Authentication" type="tns:Authentication" />
+      <s:complexType name="Authentication">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="User" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="encType" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="GetIdUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIdUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIdUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNlLists">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetNlListsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNlListsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNlListsUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNlListsUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNlListsUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewImportProcess">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idList" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="listGUID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="xmlDoc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="idGroups" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="importType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="mobileInputType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="asPending" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="ConfirmEmail" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="asOptOut" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="forceOptIn" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="replaceGroups" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="idConfirmNL" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewImportProcessResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NewImportProcessResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartImportProcesses">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="listsIDs" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listsGUIDs" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="xmlDoc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupsIDs" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="importType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="mobileInputType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="asPending" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="ConfirmEmail" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="asOptOut" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="forceOptIn" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="replaceGroups" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartImportProcessesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="StartImportProcessesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idList" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="listGUID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newGroupName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateGroupResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProcessDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idList" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="listGUID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="idProcess" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProcessDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProcessDetailsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartProcess">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idList" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="listGUID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="idProcess" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartProcessResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="StartProcessResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetIdWsUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIdWsUser" />
+  </wsdl:message>
+  <wsdl:message name="GetIdWsUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIdWsUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIdWsUserAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
+  <wsdl:message name="GetIdUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIdUser" />
+  </wsdl:message>
+  <wsdl:message name="GetIdUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIdUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIdUserAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNlLists" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNlListsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNlListsUser" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNlListsUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsUserAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
+  <wsdl:message name="NewImportProcessSoapIn">
+    <wsdl:part name="parameters" element="tns:NewImportProcess" />
+  </wsdl:message>
+  <wsdl:message name="NewImportProcessSoapOut">
+    <wsdl:part name="parameters" element="tns:NewImportProcessResponse" />
+  </wsdl:message>
+  <wsdl:message name="NewImportProcessAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
+  <wsdl:message name="StartImportProcessesSoapIn">
+    <wsdl:part name="parameters" element="tns:StartImportProcesses" />
+  </wsdl:message>
+  <wsdl:message name="StartImportProcessesSoapOut">
+    <wsdl:part name="parameters" element="tns:StartImportProcessesResponse" />
+  </wsdl:message>
+  <wsdl:message name="StartImportProcessesAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateGroup" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
+  <wsdl:message name="GetProcessDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProcessDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetProcessDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProcessDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProcessDetailsAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
+  <wsdl:message name="StartProcessSoapIn">
+    <wsdl:part name="parameters" element="tns:StartProcess" />
+  </wsdl:message>
+  <wsdl:message name="StartProcessSoapOut">
+    <wsdl:part name="parameters" element="tns:StartProcessResponse" />
+  </wsdl:message>
+  <wsdl:message name="StartProcessAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
+  <wsdl:message name="GetIdWsUserHttpGetIn" />
+  <wsdl:message name="GetIdWsUserHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIdUserHttpGetIn">
+    <wsdl:part name="userName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIdUserHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsHttpGetIn" />
+  <wsdl:message name="GetNlListsHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsUserHttpGetIn">
+    <wsdl:part name="userId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsUserHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="NewImportProcessHttpGetIn">
+    <wsdl:part name="idList" type="s:string" />
+    <wsdl:part name="listGUID" type="s:string" />
+    <wsdl:part name="xmlDoc" type="s:string" />
+    <wsdl:part name="idGroups" type="s:string" />
+    <wsdl:part name="importType" type="s:string" />
+    <wsdl:part name="mobileInputType" type="s:string" />
+    <wsdl:part name="asPending" type="s:string" />
+    <wsdl:part name="ConfirmEmail" type="s:string" />
+    <wsdl:part name="asOptOut" type="s:string" />
+    <wsdl:part name="forceOptIn" type="s:string" />
+    <wsdl:part name="replaceGroups" type="s:string" />
+    <wsdl:part name="idConfirmNL" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NewImportProcessHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="StartImportProcessesHttpGetIn">
+    <wsdl:part name="listsIDs" type="s:string" />
+    <wsdl:part name="listsGUIDs" type="s:string" />
+    <wsdl:part name="xmlDoc" type="s:string" />
+    <wsdl:part name="groupsIDs" type="s:string" />
+    <wsdl:part name="importType" type="s:string" />
+    <wsdl:part name="mobileInputType" type="s:string" />
+    <wsdl:part name="asPending" type="s:string" />
+    <wsdl:part name="ConfirmEmail" type="s:string" />
+    <wsdl:part name="asOptOut" type="s:string" />
+    <wsdl:part name="forceOptIn" type="s:string" />
+    <wsdl:part name="replaceGroups" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="StartImportProcessesHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupHttpGetIn">
+    <wsdl:part name="idList" type="s:string" />
+    <wsdl:part name="listGUID" type="s:string" />
+    <wsdl:part name="newGroupName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetProcessDetailsHttpGetIn">
+    <wsdl:part name="idList" type="s:string" />
+    <wsdl:part name="listGUID" type="s:string" />
+    <wsdl:part name="idProcess" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetProcessDetailsHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="StartProcessHttpGetIn">
+    <wsdl:part name="idList" type="s:string" />
+    <wsdl:part name="listGUID" type="s:string" />
+    <wsdl:part name="idProcess" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="StartProcessHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIdWsUserHttpPostIn" />
+  <wsdl:message name="GetIdWsUserHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIdUserHttpPostIn">
+    <wsdl:part name="userName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIdUserHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsHttpPostIn" />
+  <wsdl:message name="GetNlListsHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsUserHttpPostIn">
+    <wsdl:part name="userId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNlListsUserHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="NewImportProcessHttpPostIn">
+    <wsdl:part name="idList" type="s:string" />
+    <wsdl:part name="listGUID" type="s:string" />
+    <wsdl:part name="xmlDoc" type="s:string" />
+    <wsdl:part name="idGroups" type="s:string" />
+    <wsdl:part name="importType" type="s:string" />
+    <wsdl:part name="mobileInputType" type="s:string" />
+    <wsdl:part name="asPending" type="s:string" />
+    <wsdl:part name="ConfirmEmail" type="s:string" />
+    <wsdl:part name="asOptOut" type="s:string" />
+    <wsdl:part name="forceOptIn" type="s:string" />
+    <wsdl:part name="replaceGroups" type="s:string" />
+    <wsdl:part name="idConfirmNL" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NewImportProcessHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="StartImportProcessesHttpPostIn">
+    <wsdl:part name="listsIDs" type="s:string" />
+    <wsdl:part name="listsGUIDs" type="s:string" />
+    <wsdl:part name="xmlDoc" type="s:string" />
+    <wsdl:part name="groupsIDs" type="s:string" />
+    <wsdl:part name="importType" type="s:string" />
+    <wsdl:part name="mobileInputType" type="s:string" />
+    <wsdl:part name="asPending" type="s:string" />
+    <wsdl:part name="ConfirmEmail" type="s:string" />
+    <wsdl:part name="asOptOut" type="s:string" />
+    <wsdl:part name="forceOptIn" type="s:string" />
+    <wsdl:part name="replaceGroups" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="StartImportProcessesHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupHttpPostIn">
+    <wsdl:part name="idList" type="s:string" />
+    <wsdl:part name="listGUID" type="s:string" />
+    <wsdl:part name="newGroupName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetProcessDetailsHttpPostIn">
+    <wsdl:part name="idList" type="s:string" />
+    <wsdl:part name="listGUID" type="s:string" />
+    <wsdl:part name="idProcess" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetProcessDetailsHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="StartProcessHttpPostIn">
+    <wsdl:part name="idList" type="s:string" />
+    <wsdl:part name="listGUID" type="s:string" />
+    <wsdl:part name="idProcess" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="StartProcessHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="WSMailUpImportSoap">
+    <wsdl:operation name="GetIdWsUser">
+      <wsdl:input message="tns:GetIdWsUserSoapIn" />
+      <wsdl:output message="tns:GetIdWsUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIdUser">
+      <wsdl:input message="tns:GetIdUserSoapIn" />
+      <wsdl:output message="tns:GetIdUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNlLists">
+      <wsdl:input message="tns:GetNlListsSoapIn" />
+      <wsdl:output message="tns:GetNlListsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNlListsUser">
+      <wsdl:input message="tns:GetNlListsUserSoapIn" />
+      <wsdl:output message="tns:GetNlListsUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewImportProcess">
+      <wsdl:input message="tns:NewImportProcessSoapIn" />
+      <wsdl:output message="tns:NewImportProcessSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartImportProcesses">
+      <wsdl:input message="tns:StartImportProcessesSoapIn" />
+      <wsdl:output message="tns:StartImportProcessesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroup">
+      <wsdl:input message="tns:CreateGroupSoapIn" />
+      <wsdl:output message="tns:CreateGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProcessDetails">
+      <wsdl:input message="tns:GetProcessDetailsSoapIn" />
+      <wsdl:output message="tns:GetProcessDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartProcess">
+      <wsdl:input message="tns:StartProcessSoapIn" />
+      <wsdl:output message="tns:StartProcessSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="WSMailUpImportHttpGet">
+    <wsdl:operation name="GetIdWsUser">
+      <wsdl:input message="tns:GetIdWsUserHttpGetIn" />
+      <wsdl:output message="tns:GetIdWsUserHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIdUser">
+      <wsdl:input message="tns:GetIdUserHttpGetIn" />
+      <wsdl:output message="tns:GetIdUserHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNlLists">
+      <wsdl:input message="tns:GetNlListsHttpGetIn" />
+      <wsdl:output message="tns:GetNlListsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNlListsUser">
+      <wsdl:input message="tns:GetNlListsUserHttpGetIn" />
+      <wsdl:output message="tns:GetNlListsUserHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewImportProcess">
+      <wsdl:input message="tns:NewImportProcessHttpGetIn" />
+      <wsdl:output message="tns:NewImportProcessHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartImportProcesses">
+      <wsdl:input message="tns:StartImportProcessesHttpGetIn" />
+      <wsdl:output message="tns:StartImportProcessesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroup">
+      <wsdl:input message="tns:CreateGroupHttpGetIn" />
+      <wsdl:output message="tns:CreateGroupHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProcessDetails">
+      <wsdl:input message="tns:GetProcessDetailsHttpGetIn" />
+      <wsdl:output message="tns:GetProcessDetailsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartProcess">
+      <wsdl:input message="tns:StartProcessHttpGetIn" />
+      <wsdl:output message="tns:StartProcessHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="WSMailUpImportHttpPost">
+    <wsdl:operation name="GetIdWsUser">
+      <wsdl:input message="tns:GetIdWsUserHttpPostIn" />
+      <wsdl:output message="tns:GetIdWsUserHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIdUser">
+      <wsdl:input message="tns:GetIdUserHttpPostIn" />
+      <wsdl:output message="tns:GetIdUserHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNlLists">
+      <wsdl:input message="tns:GetNlListsHttpPostIn" />
+      <wsdl:output message="tns:GetNlListsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNlListsUser">
+      <wsdl:input message="tns:GetNlListsUserHttpPostIn" />
+      <wsdl:output message="tns:GetNlListsUserHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewImportProcess">
+      <wsdl:input message="tns:NewImportProcessHttpPostIn" />
+      <wsdl:output message="tns:NewImportProcessHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartImportProcesses">
+      <wsdl:input message="tns:StartImportProcessesHttpPostIn" />
+      <wsdl:output message="tns:StartImportProcessesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroup">
+      <wsdl:input message="tns:CreateGroupHttpPostIn" />
+      <wsdl:output message="tns:CreateGroupHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProcessDetails">
+      <wsdl:input message="tns:GetProcessDetailsHttpPostIn" />
+      <wsdl:output message="tns:GetProcessDetailsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartProcess">
+      <wsdl:input message="tns:StartProcessHttpPostIn" />
+      <wsdl:output message="tns:StartProcessHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSMailUpImportSoap" type="tns:WSMailUpImportSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetIdWsUser">
+      <soap:operation soapAction="http://ws.mailupnet.it/GetIdWsUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetIdWsUserAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIdUser">
+      <soap:operation soapAction="http://ws.mailupnet.it/GetIdUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetIdUserAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNlLists">
+      <soap:operation soapAction="http://ws.mailupnet.it/GetNlLists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetNlListsAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNlListsUser">
+      <soap:operation soapAction="http://ws.mailupnet.it/GetNlListsUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetNlListsUserAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewImportProcess">
+      <soap:operation soapAction="http://ws.mailupnet.it/NewImportProcess" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:NewImportProcessAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartImportProcesses">
+      <soap:operation soapAction="http://ws.mailupnet.it/StartImportProcesses" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:StartImportProcessesAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroup">
+      <soap:operation soapAction="http://ws.mailupnet.it/CreateGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CreateGroupAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProcessDetails">
+      <soap:operation soapAction="http://ws.mailupnet.it/GetProcessDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetProcessDetailsAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartProcess">
+      <soap:operation soapAction="http://ws.mailupnet.it/StartProcess" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:StartProcessAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSMailUpImportSoap12" type="tns:WSMailUpImportSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetIdWsUser">
+      <soap12:operation soapAction="http://ws.mailupnet.it/GetIdWsUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetIdWsUserAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIdUser">
+      <soap12:operation soapAction="http://ws.mailupnet.it/GetIdUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetIdUserAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNlLists">
+      <soap12:operation soapAction="http://ws.mailupnet.it/GetNlLists" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetNlListsAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNlListsUser">
+      <soap12:operation soapAction="http://ws.mailupnet.it/GetNlListsUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetNlListsUserAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewImportProcess">
+      <soap12:operation soapAction="http://ws.mailupnet.it/NewImportProcess" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:NewImportProcessAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartImportProcesses">
+      <soap12:operation soapAction="http://ws.mailupnet.it/StartImportProcesses" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:StartImportProcessesAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroup">
+      <soap12:operation soapAction="http://ws.mailupnet.it/CreateGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CreateGroupAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProcessDetails">
+      <soap12:operation soapAction="http://ws.mailupnet.it/GetProcessDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetProcessDetailsAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartProcess">
+      <soap12:operation soapAction="http://ws.mailupnet.it/StartProcess" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:StartProcessAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSMailUpImportHttpGet" type="tns:WSMailUpImportHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetIdWsUser">
+      <http:operation location="/GetIdWsUser" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIdUser">
+      <http:operation location="/GetIdUser" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNlLists">
+      <http:operation location="/GetNlLists" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNlListsUser">
+      <http:operation location="/GetNlListsUser" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewImportProcess">
+      <http:operation location="/NewImportProcess" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartImportProcesses">
+      <http:operation location="/StartImportProcesses" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroup">
+      <http:operation location="/CreateGroup" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProcessDetails">
+      <http:operation location="/GetProcessDetails" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartProcess">
+      <http:operation location="/StartProcess" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSMailUpImportHttpPost" type="tns:WSMailUpImportHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetIdWsUser">
+      <http:operation location="/GetIdWsUser" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIdUser">
+      <http:operation location="/GetIdUser" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNlLists">
+      <http:operation location="/GetNlLists" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNlListsUser">
+      <http:operation location="/GetNlListsUser" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewImportProcess">
+      <http:operation location="/NewImportProcess" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartImportProcesses">
+      <http:operation location="/StartImportProcesses" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroup">
+      <http:operation location="/CreateGroup" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProcessDetails">
+      <http:operation location="/GetProcessDetails" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartProcess">
+      <http:operation location="/StartProcess" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSMailUpImport">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">MailUp WebService for subscribers import.</wsdl:documentation>
+    <wsdl:port name="WSMailUpImportSoap" binding="tns:WSMailUpImportSoap">
+      <soap:address location="http://[[MAILUP_CONSOLE_URL]]/Services/WSMailupImport.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSMailUpImportSoap12" binding="tns:WSMailUpImportSoap12">
+      <soap12:address location="http://[[MAILUP_CONSOLE_URL]]/Services/WSMailupImport.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSMailUpImportHttpGet" binding="tns:WSMailUpImportHttpGet">
+      <http:address location="http://[[MAILUP_CONSOLE_URL]]/Services/WSMailupImport.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSMailUpImportHttpPost" binding="tns:WSMailUpImportHttpPost">
+      <http:address location="http://[[MAILUP_CONSOLE_URL]]/Services/WSMailupImport.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

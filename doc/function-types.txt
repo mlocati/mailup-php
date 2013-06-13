@@ -1,0 +1,615 @@
+======= MailUpImport functions
+	CreateGroupResponse CreateGroup(CreateGroup)
+	GetIdUserResponse GetIdUser(GetIdUser)
+	GetIdWsUserResponse GetIdWsUser(GetIdWsUser)
+	GetNlListsResponse GetNlLists(GetNlLists)
+	GetNlListsUserResponse GetNlListsUser(GetNlListsUser)
+	GetProcessDetailsResponse GetProcessDetails(GetProcessDetails)
+	NewImportProcessResponse NewImportProcess(NewImportProcess)
+	StartImportProcessesResponse StartImportProcesses(StartImportProcesses)
+	StartProcessResponse StartProcess(StartProcess)
+
+======= MailUpImport types
+	Authentication
+		string User
+		string Password
+		string encType
+	CreateGroup
+		int idList
+		string listGUID
+		string newGroupName
+	CreateGroupResponse
+		string CreateGroupResult
+	GetIdUser
+		string userName
+	GetIdUserResponse
+		string GetIdUserResult
+	GetIdWsUser
+	GetIdWsUserResponse
+		string GetIdWsUserResult
+	GetNlLists
+	GetNlListsResponse
+		string GetNlListsResult
+	GetNlListsUser
+		int userId
+	GetNlListsUserResponse
+		string GetNlListsUserResult
+	GetProcessDetails
+		int idList
+		string listGUID
+		int idProcess
+	GetProcessDetailsResponse
+		string GetProcessDetailsResult
+	NewImportProcess
+		int idList
+		string listGUID
+		string xmlDoc
+		string idGroups
+		int importType
+		int mobileInputType
+		boolean asPending
+		boolean ConfirmEmail
+		boolean asOptOut
+		boolean forceOptIn
+		boolean replaceGroups
+		int idConfirmNL
+	NewImportProcessResponse
+		string NewImportProcessResult
+	StartImportProcesses
+		string listsIDs
+		string listsGUIDs
+		string xmlDoc
+		string groupsIDs
+		int importType
+		int mobileInputType
+		boolean asPending
+		boolean ConfirmEmail
+		boolean asOptOut
+		boolean forceOptIn
+		boolean replaceGroups
+	StartImportProcessesResponse
+		string StartImportProcessesResult
+	StartProcess
+		int idList
+		string listGUID
+		int idProcess
+	StartProcessResponse
+		string StartProcessResult
+
+======= MailUpSend functions
+	AddNewsletterQueueResponse AddNewsletterQueue(AddNewsletterQueue)
+	CheckUserHashResponse CheckUserHash(CheckUserHash)
+	CloneMessageResponse CloneMessage(CloneMessage)
+	CreateListResponse CreateList(CreateList)
+	CreateList_stResponse CreateList_st(CreateList_st)
+	CreateNewsletterResponse CreateNewsletter(CreateNewsletter)
+	CreateSMSResponse CreateSMS(CreateSMS)
+	DeleteListResponse DeleteList(DeleteList)
+	DeleteList_stResponse DeleteList_st(DeleteList_st)
+	EditNewsletterResponse EditNewsletter(EditNewsletter)
+	GetCreditsListsResponse GetCreditsLists(GetCreditsLists)
+	GetCreditsResponse GetCredits(GetCredits)
+	GetFieldsResponse GetFields(GetFields)
+	GetFields_stResponse GetFields_st(GetFields_st)
+	GetGroupsResponse GetGroups(GetGroups)
+	GetIdUserResponse GetIdUser(GetIdUser)
+	GetListIdentityResponse GetListIdentity(GetListIdentity)
+	GetListIdentity_stResponse GetListIdentity_st(GetListIdentity_st)
+	GetListsResponse GetLists(GetLists)
+	GetListsUserResponse GetListsUser(GetListsUser)
+	GetMessagesResponse GetMessages(GetMessages)
+	GetNewsletterCodeResponse GetNewsletterCode(GetNewsletterCode)
+	GetNewsletterDeliveryStatusResponse GetNewsletterDeliveryStatus(GetNewsletterDeliveryStatus)
+	GetNewsletterQueuesResponse GetNewsletterQueues(GetNewsletterQueues)
+	GetNewsletterScheduleStatusResponse GetNewsletterScheduleStatus(GetNewsletterScheduleStatus)
+	GetNewslettersResponse GetNewsletters(GetNewsletters)
+	GetSMSDeliveryStatusResponse GetSMSDeliveryStatus(GetSMSDeliveryStatus)
+	GetSMSQueuesResponse GetSMSQueues(GetSMSQueues)
+	GetSMSResponse GetSMS(GetSMS)
+	GetTemplatesResponse GetTemplates(GetTemplates)
+	GetUserAccessResponse GetUserAccess(GetUserAccess)
+	LoginFromIdResponse LoginFromId(LoginFromId)
+	LoginResponse Login(Login)
+	LogoutResponse Logout(Logout)
+	PrepareNewsletterScheduleResponse PrepareNewsletterSchedule(PrepareNewsletterSchedule)
+	RemoveNewsletterQueueResponse RemoveNewsletterQueue(RemoveNewsletterQueue)
+	RemoveSMSQueueResponse RemoveSMSQueue(RemoveSMSQueue)
+	ScheduleNewsletterQueueResponse ScheduleNewsletterQueue(ScheduleNewsletterQueue)
+	ScheduleSMSQueueResponse ScheduleSMSQueue(ScheduleSMSQueue)
+	SendDirectSMSResponse SendDirectSMS(SendDirectSMS)
+	SendMessageNLResponse SendMessageNL(SendMessageNL)
+	SendNewsletterFastResponse SendNewsletterFast(SendNewsletterFast)
+	SendNewsletterResponse SendNewsletter(SendNewsletter)
+	SendSingleNewsletterResponse SendSingleNewsletter(SendSingleNewsletter)
+	SendSingleSMSResponse SendSingleSMS(SendSingleSMS)
+	SendSMSFastResponse SendSMSFast(SendSMSFast)
+	SendSMSResponse SendSMS(SendSMS)
+	SetNewsletterQueueOrderResponse SetNewsletterQueueOrder(SetNewsletterQueueOrder)
+	StartDeliveryResponse StartDelivery(StartDelivery)
+	StartDeliverySMSResponse StartDeliverySMS(StartDeliverySMS)
+	StopDeliveryResponse StopDelivery(StopDelivery)
+	StopDeliverySMSResponse StopDeliverySMS(StopDeliverySMS)
+
+======= MailUpSend types
+	AddNewsletterQueue
+		string accessKey
+		int deliveryID
+		boolean immediate
+	AddNewsletterQueueResponse
+		string AddNewsletterQueueResult
+	ArrayOfOption
+		Option Option
+	CheckUserHash
+		int userID
+		string userHash
+		string accessKey
+	CheckUserHashResponse
+		string CheckUserHashResult
+	CloneMessage
+		string accessKey
+		string listId
+		string listGuid
+		int messageToCloneId
+		string subject
+	CloneMessageResponse
+		int CloneMessageResult
+	CreateList
+		string accessKey
+		string name
+		string autoId
+	CreateListResponse
+		string CreateListResult
+	CreateList_st
+		string accessKey
+		string name
+		string autoId
+	CreateList_stResponse
+		string CreateList_stResult
+	CreateNewsletter
+		string accessKey
+		int listID
+		string subject
+		string type
+		string content
+		ArrayOfOption options
+	CreateNewsletterResponse
+		string CreateNewsletterResult
+	CreateSMS
+		string accessKey
+		int listID
+		string subject
+		string text
+		ArrayOfOption options
+	CreateSMSResponse
+		string CreateSMSResult
+	DeleteList
+		string accessKey
+		int listId
+		string autoId
+	DeleteListResponse
+		string DeleteListResult
+	DeleteList_st
+		string accessKey
+		int listId
+		string autoId
+	DeleteList_stResponse
+		string DeleteList_stResult
+	EditNewsletter
+		string accessKey
+		int listID
+		int newsletterId
+		string subject
+		string type
+		string content
+		ArrayOfOption options
+	EditNewsletterResponse
+		string EditNewsletterResult
+	GetCredits
+		string accessKey
+	GetCreditsResponse
+		string GetCreditsResult
+	GetCreditsLists
+		string accessKey
+		int idList
+	GetCreditsListsResponse
+		string GetCreditsListsResult
+	GetFields
+		string accessKey
+	GetFieldsResponse
+		string GetFieldsResult
+	GetFields_st
+		string accessKey
+	GetFields_stResponse
+		string GetFields_stResult
+	GetGroups
+		string accessKey
+		int listID
+	GetGroupsResponse
+		string GetGroupsResult
+	GetIdUser
+		string accessKey
+	GetIdUserResponse
+		string GetIdUserResult
+	GetListIdentity
+		string accessKey
+		string autoId
+	GetListIdentityResponse
+		string GetListIdentityResult
+	GetListIdentity_st
+		string accessKey
+		string autoId
+	GetListIdentity_stResponse
+		string GetListIdentity_stResult
+	GetLists
+		string accessKey
+	GetListsResponse
+		string GetListsResult
+	GetListsUser
+		string accessKey
+		int idUser
+	GetListsUserResponse
+		string GetListsUserResult
+	GetMessages
+		string accessKey
+		int listID
+	GetMessagesResponse
+		string GetMessagesResult
+	GetNewsletterCode
+		string accessKey
+		int listID
+		int newsletterID
+		boolean isTemplate
+	GetNewsletterCodeResponse
+		string GetNewsletterCodeResult
+	GetNewsletterDeliveryStatus
+		string accessKey
+		int deliveryID
+	GetNewsletterDeliveryStatusResponse
+		string GetNewsletterDeliveryStatusResult
+	GetNewsletterQueues
+		string accessKey
+		int listID
+	GetNewsletterQueuesResponse
+		string GetNewsletterQueuesResult
+	GetNewsletters
+		string accessKey
+		int listID
+	GetNewslettersResponse
+		string GetNewslettersResult
+	GetNewsletterScheduleStatus
+		string accessKey
+		int newsletterID
+	GetNewsletterScheduleStatusResponse
+		string GetNewsletterScheduleStatusResult
+	GetSMS
+		string accessKey
+		int listID
+	GetSMSResponse
+		string GetSMSResult
+	GetSMSDeliveryStatus
+		string accessKey
+		int deliveryID
+	GetSMSDeliveryStatusResponse
+		string GetSMSDeliveryStatusResult
+	GetSMSQueues
+		string accessKey
+		int listID
+	GetSMSQueuesResponse
+		string GetSMSQueuesResult
+	GetTemplates
+		string accessKey
+		int listID
+	GetTemplatesResponse
+		string GetTemplatesResult
+	GetUserAccess
+		int userId
+		string accessKey
+	GetUserAccessResponse
+		string GetUserAccessResult
+	Login
+		string user
+		string pwd
+		string url
+	LoginResponse
+		string LoginResult
+	LoginFromId
+		string user
+		string pwd
+		int consoleId
+	LoginFromIdResponse
+		string LoginFromIdResult
+	Logout
+		string accessKey
+	LogoutResponse
+		string LogoutResult
+	Option
+		string Key
+		anyType Value
+	PrepareNewsletterSchedule
+		string accessKey
+		int listID
+		int newsletterID
+		string deliveryDate
+		string deliveryTime
+		string adminEmail
+		int idUser
+		string note
+	PrepareNewsletterScheduleResponse
+		string PrepareNewsletterScheduleResult
+	RemoveNewsletterQueue
+		string accessKey
+		int listID
+		int newsletterID
+		int deliveryID
+		int scheduleID
+		boolean deleteQueue
+	RemoveNewsletterQueueResponse
+		string RemoveNewsletterQueueResult
+	RemoveSMSQueue
+		string accessKey
+		int deliveryID
+		int scheduleID
+		boolean deleteQueue
+	RemoveSMSQueueResponse
+		string RemoveSMSQueueResult
+	ScheduleNewsletterQueue
+		string accessKey
+		int listID
+		int newsletterID
+		int scheduleID
+		string deliverydt
+		int timezone
+	ScheduleNewsletterQueueResponse
+		string ScheduleNewsletterQueueResult
+	ScheduleSMSQueue
+		string accessKey
+		int listID
+		int smsID
+		int scheduleID
+		string deliverydt
+		int timezone
+	ScheduleSMSQueueResponse
+		string ScheduleSMSQueueResult
+	SendDirectSMS
+		string accessKey
+		int listID
+		string content
+		string numero
+		ArrayOfOption options
+	SendDirectSMSResponse
+		string SendDirectSMSResult
+	SendMessageNL
+		string accessKey
+		string fileName
+		string separator
+		string listId
+		string listGuid
+		string messageId
+		string senderName
+		string sender
+		string subject
+		dateTime timeDateSending
+		int sendDelayTest
+	SendMessageNLResponse
+		int SendMessageNLResult
+	SendNewsletter
+		string accessKey
+		int listID
+		int newsletterID
+		ArrayOfOption options
+	SendNewsletterResponse
+		string SendNewsletterResult
+	SendNewsletterFast
+		string accessKey
+		int listID
+		string subject
+		string type
+		string content
+		ArrayOfOption options
+	SendNewsletterFastResponse
+		string SendNewsletterFastResult
+	SendSingleNewsletter
+		string accessKey
+		int listID
+		string subject
+		string type
+		string content
+		string recipientEmail
+		ArrayOfOption options
+	SendSingleNewsletterResponse
+		string SendSingleNewsletterResult
+	SendSingleSMS
+		string accessKey
+		int listID
+		string subject
+		string type
+		string content
+		string numero
+		ArrayOfOption options
+	SendSingleSMSResponse
+		string SendSingleSMSResult
+	SendSMS
+		string accessKey
+		int listID
+		int smsID
+		ArrayOfOption options
+	SendSMSResponse
+		string SendSMSResult
+	SendSMSFast
+		string accessKey
+		int listID
+		string subject
+		string text
+		ArrayOfOption options
+	SendSMSFastResponse
+		string SendSMSFastResult
+	SetNewsletterQueueOrder
+		string accessKey
+		int scheduleID
+		boolean Up
+	SetNewsletterQueueOrderResponse
+		string SetNewsletterQueueOrderResult
+	StartDelivery
+		string accessKey
+	StartDeliveryResponse
+		string StartDeliveryResult
+	StartDeliverySMS
+		string accessKey
+	StartDeliverySMSResponse
+		string StartDeliverySMSResult
+	StopDelivery
+		string accessKey
+	StopDeliveryResponse
+		string StopDeliveryResult
+	StopDeliverySMS
+		string accessKey
+	StopDeliverySMSResponse
+		string StopDeliverySMSResult
+
+======= MailUpManage functions
+	CreateGroupResponse CreateGroup(CreateGroup)
+	CreateListResponse CreateList(CreateList)
+	DeleteGroupResponse DeleteGroup(DeleteGroup)
+	DeleteListResponse DeleteList(DeleteList)
+	GetGroupsResponse GetGroups(GetGroups)
+	GetIdUserResponse GetIdUser(GetIdUser)
+	GetListsResponse GetLists(GetLists)
+	GetListsUserResponse GetListsUser(GetListsUser)
+	LoginFromIdResponse LoginFromId(LoginFromId)
+	LoginResponse Login(Login)
+	LogoutResponse Logout(Logout)
+	UpdateGroupResponse UpdateGroup(UpdateGroup)
+	UpdateListResponse UpdateList(UpdateList)
+
+======= MailUpManage: types:
+	ArrayOfOption
+		Option Option
+	CreateGroup
+		string accessKey
+		int listID
+		string groupName
+		string groupNotes
+	CreateGroupResponse
+		string CreateGroupResult
+	CreateList
+		string accessKey
+		string name
+		string defaultSettings
+		boolean copyTemplate
+		ArrayOfOption options
+	CreateListResponse
+		string CreateListResult
+	DeleteGroup
+		string accessKey
+		int listID
+		int groupID
+		boolean deleteUsers
+	DeleteGroupResponse
+		string DeleteGroupResult
+	DeleteList
+		string accessKey
+		int listID
+	DeleteListResponse
+		string DeleteListResult
+	GetGroups
+		string accessKey
+		int listID
+	GetGroupsResponse
+		string GetGroupsResult
+	GetIdUser
+		string accessKey
+	GetIdUserResponse
+		string GetIdUserResult
+	GetLists
+		string accessKey
+	GetListsResponse
+		string GetListsResult
+	GetListsUser
+		string accessKey
+		int idUser
+	GetListsUserResponse
+		string GetListsUserResult
+	Login
+		string user
+		string pwd
+		string url
+	LoginResponse
+		string LoginResult
+	LoginFromId
+		string user
+		string pwd
+		int consoleId
+	LoginFromIdResponse
+		string LoginFromIdResult
+	Logout
+		string accessKey
+	LogoutResponse
+		string LogoutResult
+	Option
+		string Key
+		anyType Value
+	UpdateGroup
+		string accessKey
+		int groupID
+		ArrayOfOption options
+	UpdateGroupResponse
+		string UpdateGroupResult
+	UpdateList
+		string accessKey
+		int listID
+		ArrayOfOption options
+	UpdateListResponse
+		string UpdateListResult
+
+======= MailupReport functions
+	LoginFromIdResponse LoginFromId(LoginFromId)
+	LoginResponse Login(Login)
+	LogoutResponse Logout(Logout)
+	ReportByMessageENResponse ReportByMessageEN(ReportByMessageEN)
+	ReportByMessageResponse ReportByMessage(ReportByMessage)
+	ReportByUserENResponse ReportByUserEN(ReportByUserEN)
+	ReportByUserResponse ReportByUser(ReportByUser)
+
+======= MailupReport types
+	Login
+		string user
+		string pwd
+		string url
+	LoginResponse
+		string LoginResult
+	LoginFromId
+		string user
+		string pwd
+		int consoleId
+	LoginFromIdResponse
+		string LoginFromIdResult
+	Logout
+		string accessKey
+	LogoutResponse
+		string LogoutResult
+	ReportByMessage
+		string accessKey
+		int listID
+		int messageID
+	ReportByMessageResponse
+		string ReportByMessageResult
+	ReportByMessageEN
+		string accessKey
+		int listID
+		int messageID
+	ReportByMessageENResponse
+		string ReportByMessageENResult
+	ReportByUser
+		string accessKey
+		string email
+		int listID
+		int messageID
+	ReportByUserResponse
+		string ReportByUserResult
+	ReportByUserEN
+		string accessKey
+		string email
+		int listID
+		int messageID
+	ReportByUserENResponse
+		string ReportByUserENResult

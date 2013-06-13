@@ -1,0 +1,2339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://services.mailupnet.it/WS" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://services.mailupnet.it/WS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://services.mailupnet.it/WS">
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pwd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pwd" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="consoleId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Logout">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogoutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LogoutResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIdUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIdUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIdUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListsUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="idUser" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListsUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListsUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLists">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGroups">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGroupsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGroupsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCredits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCreditsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCreditsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCreditsLists">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="idList" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCreditsListsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCreditsListsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserAccess">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserAccessResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserAccessResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckUserHash">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="userHash" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckUserHashResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckUserHashResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTemplates">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTemplatesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTemplatesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewsletters">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewslettersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNewslettersResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMessages">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMessagesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMessagesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateNewsletter">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfOption">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Option" nillable="true" type="tns:Option" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Option">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateNewsletterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateNewsletterResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EditNewsletter">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="newsletterId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EditNewsletterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EditNewsletterResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewsletterCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="newsletterID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="isTemplate" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewsletterCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNewsletterCodeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendNewsletter">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="newsletterID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendNewsletterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendNewsletterResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewsletterDeliveryStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="deliveryID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewsletterDeliveryStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNewsletterDeliveryStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartDelivery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartDeliveryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="StartDeliveryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StopDelivery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StopDeliveryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="StopDeliveryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendNewsletterFast">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendNewsletterFastResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendNewsletterFastResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSingleNewsletter">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSingleNewsletterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendSingleNewsletterResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewsletterQueues">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewsletterQueuesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNewsletterQueuesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewsletterScheduleStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="newsletterID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewsletterScheduleStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNewsletterScheduleStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetNewsletterQueueOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="scheduleID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Up" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetNewsletterQueueOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetNewsletterQueueOrderResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddNewsletterQueue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="deliveryID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="immediate" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddNewsletterQueueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddNewsletterQueueResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveNewsletterQueue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="newsletterID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="deliveryID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="scheduleID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="deleteQueue" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveNewsletterQueueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RemoveNewsletterQueueResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ScheduleNewsletterQueue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="newsletterID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="scheduleID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="deliverydt" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timezone" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ScheduleNewsletterQueueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ScheduleNewsletterQueueResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PrepareNewsletterSchedule">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="newsletterID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="deliveryDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="deliveryTime" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="adminEmail" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="idUser" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="note" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PrepareNewsletterScheduleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PrepareNewsletterScheduleResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMessageNL">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="separator" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listGuid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="messageId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sender" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeDateSending" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="sendDelayTest" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMessageNLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendMessageNLResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CloneMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listGuid" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="messageToCloneId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CloneMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CloneMessageResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFields">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFieldsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFieldsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFields_st">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFields_stResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFields_stResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateList_st">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="autoId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateList_stResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateList_stResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteList_st">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="autoId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteList_stResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteList_stResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListIdentity_st">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="autoId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListIdentity_stResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListIdentity_stResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="autoId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="autoId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListIdentity">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="autoId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListIdentityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListIdentityResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSMSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="text" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateSMSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="smsID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendSMSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSMSFast">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="text" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSMSFastResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendSMSFastResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSingleSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="numero" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSingleSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendSingleSMSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDirectSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="numero" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDirectSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendDirectSMSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSMSDeliveryStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="deliveryID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSMSDeliveryStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSMSDeliveryStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartDeliverySMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartDeliverySMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="StartDeliverySMSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StopDeliverySMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StopDeliverySMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="StopDeliverySMSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSMSQueues">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSMSQueuesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSMSQueuesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveSMSQueue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="deliveryID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="scheduleID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="deleteQueue" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveSMSQueueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RemoveSMSQueueResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ScheduleSMSQueue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accessKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="listID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="smsID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="scheduleID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="deliverydt" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timezone" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ScheduleSMSQueueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ScheduleSMSQueueResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:LoginFromId" />
+  </wsdl:message>
+  <wsdl:message name="LoginFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapIn">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapOut">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIdUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIdUser" />
+  </wsdl:message>
+  <wsdl:message name="GetIdUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIdUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListsUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListsUser" />
+  </wsdl:message>
+  <wsdl:message name="GetListsUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListsUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLists" />
+  </wsdl:message>
+  <wsdl:message name="GetListsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGroupsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGroups" />
+  </wsdl:message>
+  <wsdl:message name="GetGroupsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCreditsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCredits" />
+  </wsdl:message>
+  <wsdl:message name="GetCreditsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCreditsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCreditsListsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCreditsLists" />
+  </wsdl:message>
+  <wsdl:message name="GetCreditsListsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCreditsListsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserAccessSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserAccess" />
+  </wsdl:message>
+  <wsdl:message name="GetUserAccessSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserAccessResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserHashSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckUserHash" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserHashSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckUserHashResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTemplatesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTemplates" />
+  </wsdl:message>
+  <wsdl:message name="GetTemplatesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTemplatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNewslettersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNewsletters" />
+  </wsdl:message>
+  <wsdl:message name="GetNewslettersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNewslettersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMessages" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMessagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateNewsletterSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateNewsletter" />
+  </wsdl:message>
+  <wsdl:message name="CreateNewsletterSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateNewsletterResponse" />
+  </wsdl:message>
+  <wsdl:message name="EditNewsletterSoapIn">
+    <wsdl:part name="parameters" element="tns:EditNewsletter" />
+  </wsdl:message>
+  <wsdl:message name="EditNewsletterSoapOut">
+    <wsdl:part name="parameters" element="tns:EditNewsletterResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNewsletterCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNewsletterCode" />
+  </wsdl:message>
+  <wsdl:message name="GetNewsletterCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNewsletterCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendNewsletterSoapIn">
+    <wsdl:part name="parameters" element="tns:SendNewsletter" />
+  </wsdl:message>
+  <wsdl:message name="SendNewsletterSoapOut">
+    <wsdl:part name="parameters" element="tns:SendNewsletterResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNewsletterDeliveryStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNewsletterDeliveryStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetNewsletterDeliveryStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNewsletterDeliveryStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="StartDeliverySoapIn">
+    <wsdl:part name="parameters" element="tns:StartDelivery" />
+  </wsdl:message>
+  <wsdl:message name="StartDeliverySoapOut">
+    <wsdl:part name="parameters" element="tns:StartDeliveryResponse" />
+  </wsdl:message>
+  <wsdl:message name="StopDeliverySoapIn">
+    <wsdl:part name="parameters" element="tns:StopDelivery" />
+  </wsdl:message>
+  <wsdl:message name="StopDeliverySoapOut">
+    <wsdl:part name="parameters" element="tns:StopDeliveryResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendNewsletterFastSoapIn">
+    <wsdl:part name="parameters" element="tns:SendNewsletterFast" />
+  </wsdl:message>
+  <wsdl:message name="SendNewsletterFastSoapOut">
+    <wsdl:part name="parameters" element="tns:SendNewsletterFastResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendSingleNewsletterSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSingleNewsletter" />
+  </wsdl:message>
+  <wsdl:message name="SendSingleNewsletterSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSingleNewsletterResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNewsletterQueuesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNewsletterQueues" />
+  </wsdl:message>
+  <wsdl:message name="GetNewsletterQueuesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNewsletterQueuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNewsletterScheduleStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNewsletterScheduleStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetNewsletterScheduleStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNewsletterScheduleStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetNewsletterQueueOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:SetNewsletterQueueOrder" />
+  </wsdl:message>
+  <wsdl:message name="SetNewsletterQueueOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:SetNewsletterQueueOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddNewsletterQueueSoapIn">
+    <wsdl:part name="parameters" element="tns:AddNewsletterQueue" />
+  </wsdl:message>
+  <wsdl:message name="AddNewsletterQueueSoapOut">
+    <wsdl:part name="parameters" element="tns:AddNewsletterQueueResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveNewsletterQueueSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveNewsletterQueue" />
+  </wsdl:message>
+  <wsdl:message name="RemoveNewsletterQueueSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveNewsletterQueueResponse" />
+  </wsdl:message>
+  <wsdl:message name="ScheduleNewsletterQueueSoapIn">
+    <wsdl:part name="parameters" element="tns:ScheduleNewsletterQueue" />
+  </wsdl:message>
+  <wsdl:message name="ScheduleNewsletterQueueSoapOut">
+    <wsdl:part name="parameters" element="tns:ScheduleNewsletterQueueResponse" />
+  </wsdl:message>
+  <wsdl:message name="PrepareNewsletterScheduleSoapIn">
+    <wsdl:part name="parameters" element="tns:PrepareNewsletterSchedule" />
+  </wsdl:message>
+  <wsdl:message name="PrepareNewsletterScheduleSoapOut">
+    <wsdl:part name="parameters" element="tns:PrepareNewsletterScheduleResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendMessageNLSoapIn">
+    <wsdl:part name="parameters" element="tns:SendMessageNL" />
+  </wsdl:message>
+  <wsdl:message name="SendMessageNLSoapOut">
+    <wsdl:part name="parameters" element="tns:SendMessageNLResponse" />
+  </wsdl:message>
+  <wsdl:message name="CloneMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:CloneMessage" />
+  </wsdl:message>
+  <wsdl:message name="CloneMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:CloneMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFieldsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFields" />
+  </wsdl:message>
+  <wsdl:message name="GetFieldsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFieldsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFields_stSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFields_st" />
+  </wsdl:message>
+  <wsdl:message name="GetFields_stSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFields_stResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateList_stSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateList_st" />
+  </wsdl:message>
+  <wsdl:message name="CreateList_stSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateList_stResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteList_stSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteList_st" />
+  </wsdl:message>
+  <wsdl:message name="DeleteList_stSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteList_stResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListIdentity_stSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListIdentity_st" />
+  </wsdl:message>
+  <wsdl:message name="GetListIdentity_stSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListIdentity_stResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateListSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateList" />
+  </wsdl:message>
+  <wsdl:message name="CreateListSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateListResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteListSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteList" />
+  </wsdl:message>
+  <wsdl:message name="DeleteListSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListIdentitySoapIn">
+    <wsdl:part name="parameters" element="tns:GetListIdentity" />
+  </wsdl:message>
+  <wsdl:message name="GetListIdentitySoapOut">
+    <wsdl:part name="parameters" element="tns:GetListIdentityResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSMS" />
+  </wsdl:message>
+  <wsdl:message name="GetSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateSMS" />
+  </wsdl:message>
+  <wsdl:message name="CreateSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSMS" />
+  </wsdl:message>
+  <wsdl:message name="SendSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendSMSFastSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSMSFast" />
+  </wsdl:message>
+  <wsdl:message name="SendSMSFastSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSMSFastResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendSingleSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSingleSMS" />
+  </wsdl:message>
+  <wsdl:message name="SendSingleSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSingleSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendDirectSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:SendDirectSMS" />
+  </wsdl:message>
+  <wsdl:message name="SendDirectSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:SendDirectSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSMSDeliveryStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSMSDeliveryStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetSMSDeliveryStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSMSDeliveryStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="StartDeliverySMSSoapIn">
+    <wsdl:part name="parameters" element="tns:StartDeliverySMS" />
+  </wsdl:message>
+  <wsdl:message name="StartDeliverySMSSoapOut">
+    <wsdl:part name="parameters" element="tns:StartDeliverySMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="StopDeliverySMSSoapIn">
+    <wsdl:part name="parameters" element="tns:StopDeliverySMS" />
+  </wsdl:message>
+  <wsdl:message name="StopDeliverySMSSoapOut">
+    <wsdl:part name="parameters" element="tns:StopDeliverySMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSMSQueuesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSMSQueues" />
+  </wsdl:message>
+  <wsdl:message name="GetSMSQueuesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSMSQueuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveSMSQueueSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveSMSQueue" />
+  </wsdl:message>
+  <wsdl:message name="RemoveSMSQueueSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveSMSQueueResponse" />
+  </wsdl:message>
+  <wsdl:message name="ScheduleSMSQueueSoapIn">
+    <wsdl:part name="parameters" element="tns:ScheduleSMSQueue" />
+  </wsdl:message>
+  <wsdl:message name="ScheduleSMSQueueSoapOut">
+    <wsdl:part name="parameters" element="tns:ScheduleSMSQueueResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MailupSendSoap">
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginFromId">
+      <wsdl:input message="tns:LoginFromIdSoapIn" />
+      <wsdl:output message="tns:LoginFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input message="tns:LogoutSoapIn" />
+      <wsdl:output message="tns:LogoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIdUser">
+      <wsdl:input message="tns:GetIdUserSoapIn" />
+      <wsdl:output message="tns:GetIdUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListsUser">
+      <wsdl:input message="tns:GetListsUserSoapIn" />
+      <wsdl:output message="tns:GetListsUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLists">
+      <wsdl:input message="tns:GetListsSoapIn" />
+      <wsdl:output message="tns:GetListsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGroups">
+      <wsdl:input message="tns:GetGroupsSoapIn" />
+      <wsdl:output message="tns:GetGroupsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCredits">
+      <wsdl:input message="tns:GetCreditsSoapIn" />
+      <wsdl:output message="tns:GetCreditsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCreditsLists">
+      <wsdl:input message="tns:GetCreditsListsSoapIn" />
+      <wsdl:output message="tns:GetCreditsListsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccess">
+      <wsdl:input message="tns:GetUserAccessSoapIn" />
+      <wsdl:output message="tns:GetUserAccessSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserHash">
+      <wsdl:input message="tns:CheckUserHashSoapIn" />
+      <wsdl:output message="tns:CheckUserHashSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTemplates">
+      <wsdl:input message="tns:GetTemplatesSoapIn" />
+      <wsdl:output message="tns:GetTemplatesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletters">
+      <wsdl:input message="tns:GetNewslettersSoapIn" />
+      <wsdl:output message="tns:GetNewslettersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessages">
+      <wsdl:input message="tns:GetMessagesSoapIn" />
+      <wsdl:output message="tns:GetMessagesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewsletter">
+      <wsdl:input message="tns:CreateNewsletterSoapIn" />
+      <wsdl:output message="tns:CreateNewsletterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EditNewsletter">
+      <wsdl:input message="tns:EditNewsletterSoapIn" />
+      <wsdl:output message="tns:EditNewsletterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterCode">
+      <wsdl:input message="tns:GetNewsletterCodeSoapIn" />
+      <wsdl:output message="tns:GetNewsletterCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendNewsletter">
+      <wsdl:input message="tns:SendNewsletterSoapIn" />
+      <wsdl:output message="tns:SendNewsletterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterDeliveryStatus">
+      <wsdl:input message="tns:GetNewsletterDeliveryStatusSoapIn" />
+      <wsdl:output message="tns:GetNewsletterDeliveryStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartDelivery">
+      <wsdl:input message="tns:StartDeliverySoapIn" />
+      <wsdl:output message="tns:StartDeliverySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StopDelivery">
+      <wsdl:input message="tns:StopDeliverySoapIn" />
+      <wsdl:output message="tns:StopDeliverySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendNewsletterFast">
+      <wsdl:input message="tns:SendNewsletterFastSoapIn" />
+      <wsdl:output message="tns:SendNewsletterFastSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSingleNewsletter">
+      <wsdl:input message="tns:SendSingleNewsletterSoapIn" />
+      <wsdl:output message="tns:SendSingleNewsletterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterQueues">
+      <wsdl:input message="tns:GetNewsletterQueuesSoapIn" />
+      <wsdl:output message="tns:GetNewsletterQueuesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterScheduleStatus">
+      <wsdl:input message="tns:GetNewsletterScheduleStatusSoapIn" />
+      <wsdl:output message="tns:GetNewsletterScheduleStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetNewsletterQueueOrder">
+      <wsdl:input message="tns:SetNewsletterQueueOrderSoapIn" />
+      <wsdl:output message="tns:SetNewsletterQueueOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddNewsletterQueue">
+      <wsdl:input message="tns:AddNewsletterQueueSoapIn" />
+      <wsdl:output message="tns:AddNewsletterQueueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveNewsletterQueue">
+      <wsdl:input message="tns:RemoveNewsletterQueueSoapIn" />
+      <wsdl:output message="tns:RemoveNewsletterQueueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ScheduleNewsletterQueue">
+      <wsdl:input message="tns:ScheduleNewsletterQueueSoapIn" />
+      <wsdl:output message="tns:ScheduleNewsletterQueueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PrepareNewsletterSchedule">
+      <wsdl:input message="tns:PrepareNewsletterScheduleSoapIn" />
+      <wsdl:output message="tns:PrepareNewsletterScheduleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMessageNL">
+      <wsdl:input message="tns:SendMessageNLSoapIn" />
+      <wsdl:output message="tns:SendMessageNLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CloneMessage">
+      <wsdl:input message="tns:CloneMessageSoapIn" />
+      <wsdl:output message="tns:CloneMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFields">
+      <wsdl:input message="tns:GetFieldsSoapIn" />
+      <wsdl:output message="tns:GetFieldsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFields_st">
+      <wsdl:input message="tns:GetFields_stSoapIn" />
+      <wsdl:output message="tns:GetFields_stSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateList_st">
+      <wsdl:input message="tns:CreateList_stSoapIn" />
+      <wsdl:output message="tns:CreateList_stSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteList_st">
+      <wsdl:input message="tns:DeleteList_stSoapIn" />
+      <wsdl:output message="tns:DeleteList_stSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListIdentity_st">
+      <wsdl:input message="tns:GetListIdentity_stSoapIn" />
+      <wsdl:output message="tns:GetListIdentity_stSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateList">
+      <wsdl:input message="tns:CreateListSoapIn" />
+      <wsdl:output message="tns:CreateListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteList">
+      <wsdl:input message="tns:DeleteListSoapIn" />
+      <wsdl:output message="tns:DeleteListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListIdentity">
+      <wsdl:input message="tns:GetListIdentitySoapIn" />
+      <wsdl:output message="tns:GetListIdentitySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSMS">
+      <wsdl:input message="tns:GetSMSSoapIn" />
+      <wsdl:output message="tns:GetSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateSMS">
+      <wsdl:input message="tns:CreateSMSSoapIn" />
+      <wsdl:output message="tns:CreateSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSMS">
+      <wsdl:input message="tns:SendSMSSoapIn" />
+      <wsdl:output message="tns:SendSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSMSFast">
+      <wsdl:input message="tns:SendSMSFastSoapIn" />
+      <wsdl:output message="tns:SendSMSFastSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSingleSMS">
+      <wsdl:input message="tns:SendSingleSMSSoapIn" />
+      <wsdl:output message="tns:SendSingleSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDirectSMS">
+      <wsdl:input message="tns:SendDirectSMSSoapIn" />
+      <wsdl:output message="tns:SendDirectSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSMSDeliveryStatus">
+      <wsdl:input message="tns:GetSMSDeliveryStatusSoapIn" />
+      <wsdl:output message="tns:GetSMSDeliveryStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartDeliverySMS">
+      <wsdl:input message="tns:StartDeliverySMSSoapIn" />
+      <wsdl:output message="tns:StartDeliverySMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StopDeliverySMS">
+      <wsdl:input message="tns:StopDeliverySMSSoapIn" />
+      <wsdl:output message="tns:StopDeliverySMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSMSQueues">
+      <wsdl:input message="tns:GetSMSQueuesSoapIn" />
+      <wsdl:output message="tns:GetSMSQueuesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSMSQueue">
+      <wsdl:input message="tns:RemoveSMSQueueSoapIn" />
+      <wsdl:output message="tns:RemoveSMSQueueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ScheduleSMSQueue">
+      <wsdl:input message="tns:ScheduleSMSQueueSoapIn" />
+      <wsdl:output message="tns:ScheduleSMSQueueSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MailupSendSoap" type="tns:MailupSendSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginFromId">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/LoginFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIdUser">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetIdUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListsUser">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetListsUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLists">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetLists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGroups">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCredits">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetCredits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCreditsLists">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetCreditsLists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccess">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetUserAccess" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserHash">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/CheckUserHash" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTemplates">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetTemplates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletters">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetNewsletters" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessages">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetMessages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewsletter">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/CreateNewsletter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditNewsletter">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/EditNewsletter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterCode">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetNewsletterCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendNewsletter">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/SendNewsletter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterDeliveryStatus">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetNewsletterDeliveryStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartDelivery">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/StartDelivery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopDelivery">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/StopDelivery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendNewsletterFast">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/SendNewsletterFast" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSingleNewsletter">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/SendSingleNewsletter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterQueues">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetNewsletterQueues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterScheduleStatus">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetNewsletterScheduleStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetNewsletterQueueOrder">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/SetNewsletterQueueOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewsletterQueue">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/AddNewsletterQueue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveNewsletterQueue">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/RemoveNewsletterQueue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ScheduleNewsletterQueue">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/ScheduleNewsletterQueue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrepareNewsletterSchedule">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/PrepareNewsletterSchedule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMessageNL">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/SendMessageNL" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloneMessage">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/CloneMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFields">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetFields" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFields_st">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetFields_st" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateList_st">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/CreateList_st" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteList_st">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/DeleteList_st" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListIdentity_st">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetListIdentity_st" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateList">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/CreateList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteList">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/DeleteList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListIdentity">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetListIdentity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSMS">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSMS">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/CreateSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSMS">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/SendSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSMSFast">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/SendSMSFast" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSingleSMS">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/SendSingleSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDirectSMS">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/SendDirectSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSMSDeliveryStatus">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetSMSDeliveryStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartDeliverySMS">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/StartDeliverySMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopDeliverySMS">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/StopDeliverySMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSMSQueues">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/GetSMSQueues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSMSQueue">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/RemoveSMSQueue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ScheduleSMSQueue">
+      <soap:operation soapAction="http://services.mailupnet.it/WS/ScheduleSMSQueue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MailupSendSoap12" type="tns:MailupSendSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginFromId">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/LoginFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/Logout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIdUser">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetIdUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListsUser">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetListsUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLists">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetLists" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGroups">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCredits">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetCredits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCreditsLists">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetCreditsLists" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccess">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetUserAccess" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserHash">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/CheckUserHash" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTemplates">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetTemplates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletters">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetNewsletters" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessages">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetMessages" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewsletter">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/CreateNewsletter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditNewsletter">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/EditNewsletter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterCode">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetNewsletterCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendNewsletter">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/SendNewsletter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterDeliveryStatus">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetNewsletterDeliveryStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartDelivery">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/StartDelivery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopDelivery">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/StopDelivery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendNewsletterFast">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/SendNewsletterFast" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSingleNewsletter">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/SendSingleNewsletter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterQueues">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetNewsletterQueues" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewsletterScheduleStatus">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetNewsletterScheduleStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetNewsletterQueueOrder">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/SetNewsletterQueueOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewsletterQueue">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/AddNewsletterQueue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveNewsletterQueue">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/RemoveNewsletterQueue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ScheduleNewsletterQueue">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/ScheduleNewsletterQueue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrepareNewsletterSchedule">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/PrepareNewsletterSchedule" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMessageNL">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/SendMessageNL" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloneMessage">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/CloneMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFields">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetFields" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFields_st">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetFields_st" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateList_st">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/CreateList_st" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteList_st">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/DeleteList_st" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListIdentity_st">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetListIdentity_st" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateList">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/CreateList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteList">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/DeleteList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListIdentity">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetListIdentity" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSMS">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSMS">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/CreateSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSMS">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/SendSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSMSFast">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/SendSMSFast" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSingleSMS">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/SendSingleSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDirectSMS">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/SendDirectSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSMSDeliveryStatus">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetSMSDeliveryStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartDeliverySMS">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/StartDeliverySMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopDeliverySMS">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/StopDeliverySMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSMSQueues">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/GetSMSQueues" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSMSQueue">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/RemoveSMSQueue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ScheduleSMSQueue">
+      <soap12:operation soapAction="http://services.mailupnet.it/WS/ScheduleSMSQueue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MailupSend">
+    <wsdl:port name="MailupSendSoap" binding="tns:MailupSendSoap">
+      <soap:address location="https://wsvc.ss.mailup.it/MailupSend.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MailupSendSoap12" binding="tns:MailupSendSoap12">
+      <soap12:address location="https://wsvc.ss.mailup.it/MailupSend.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
