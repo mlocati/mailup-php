@@ -283,11 +283,12 @@ class MailUp {
 		}
 	}
 	/** Returns the access key that must be used by some soap call.
-	* @param bool $forUse Will you use it?
+	* @param bool $forUse [default: true] Will you use it?
+	* @param bool $forUse [default: true] Generate a new access key if we did not already done so?
 	* @return string
 	* @throws Exception Throws an Exception in case of errros.
 	*/
-	private function getAccessKey($forUse = true) {
+	private function getAccessKey($forUse = true, $generateIfNotSet = true) {
 		$timeLimit = time() - self::ACCESSKEY_DURATION * 60 - 30;
 		$cacheFile = $this->getAccessKeyCacheFilename();
 		if($this->accessKeyCache && ($this->accessKeyCache['timestamp'] <= $timeLimit)) {
@@ -308,20 +309,27 @@ class MailUp {
 				}
 			}
 			if(!$cache) {
-				$response = $this->exec(self::CLIENT_SEND, 'LoginFromId', array('user' => $this->username, 'pwd' => $this->password, 'consoleId' => $this->consoleId));
-				$cache = array('accessKey' => (string)$response->accessKey, 'timestamp' => time());
+				if($generateIfNotSet) {
+					$response = $this->exec(self::CLIENT_SEND, 'LoginFromId', array('user' => $this->username, 'pwd' => $this->password, 'consoleId' => $this->consoleId));
+					$cache = array('accessKey' => (string)$response->accessKey, 'timestamp' => time());
+				}
 			}
 			$this->accessKeyCache = $cache;
 		}
-		if(self::ACCESSKEY_RESET_DURATION_ON_USE && $forUse) {
-			$this->accessKeyCache['timestamp'] = time();
-		}
-		if(strlen($cacheFile)) {
-			if((self::ACCESSKEY_RESET_DURATION_ON_USE && $forUse) || (!is_file($cacheFile))) {
-				@file_put_contents($cacheFile, serialize($this->accessKeyCache));
+		if($this->accessKeyCache) {
+			if(self::ACCESSKEY_RESET_DURATION_ON_USE && $forUse) {
+				$this->accessKeyCache['timestamp'] = time();
 			}
+			if(strlen($cacheFile)) {
+				if((self::ACCESSKEY_RESET_DURATION_ON_USE && $forUse) || (!is_file($cacheFile))) {
+					@file_put_contents($cacheFile, serialize($this->accessKeyCache));
+				}
+			}
+			return $this->accessKeyCache['accessKey'];
 		}
-		return $this->accessKeyCache['accessKey'];
+		else {
+			return '';
+		}
 	}
 	/** Returns the authorization header that must be used by some soap call.
 	* @return SoapHeader
@@ -347,6 +355,19 @@ class MailUp {
 		else {
 			return $stdClass;
 		}
+	}
+	/** Retuns a javascript defining some javascript constants.
+	* @return string
+	*/
+	public static function getDefinesForJavascript() {
+		$result = array();
+		$result['IMPORTPROCESS'] = array(
+			'NOTSTARTED' => self::IMPORTPROCESS_NOTSTARTED,
+			'RUNNING' => self::IMPORTPROCESS_RUNNING,
+			'COMPLETED' => self::IMPORTPROCESS_COMPLETED,
+			'FAILED' => self::IMPORTPROCESS_FAILED
+		);
+		return json_encode($result);
 	}
 	/** Converts a SimpleXMLElement to an associative array, with type casting.
 	* @param SimpleXMLElement $xml
@@ -452,7 +473,7 @@ class MailUp {
 	* @return boolean Returns true if the conversion was successful, false otherwise.
 	*/
 	private static function unformatTime(&$time) {
-		if(preg_match('%(\d+)/(\d+)/(\d+) (\d+):(\d+):(\d+)%', $time, $m)) {
+		if(preg_match('%(\d+)/(\d+)/(\d+) (\d+)[:.](\d+)[:.](\d+)%', $time, $m)) {
 			$defaultTimeZone = date_default_timezone_get();
 			date_default_timezone_set('Europe/Rome');
 			$time = mktime($m[4], $m[5], $m[6], $m[2], $m[1], $m[3]);
@@ -461,6 +482,20 @@ class MailUp {
 		}
 		else {
 			return false;
+		}
+	}
+	/** Perform a logout (no action taken if not currently logged in).
+	* @throws Exception Throws an Exception in case of errros.
+	*/
+	public function Logout() {
+		$accessKey = $this->getAccessKey(false, false);
+		if(strlen($accessKey)) {
+			$response = $this->exec(self::CLIENT_SEND, 'Logout', array('accessKey' => $accessKey));
+			$this->accessKeyCache = null;
+			$cacheFile = $this->getAccessKeyCacheFilename();
+			if(strlen($cacheFile) && is_file($cacheFile)) {
+				@unlink($cacheFile);
+			}
 		}
 	}
 	/** Retrieves all the lists.
@@ -554,6 +589,17 @@ class MailUp {
 		}
 		return $report;
 	}
+	/** Retrieves all the lists and groups.
+	* @return array Returns a list of MailUp lists, each one with the following keys:<ul>
+	*	<li>int <b>id</b> the id of the list</li>
+	*	<li>string <b>name</b> the name of the list</li>
+	*	<li>array <b>groups</b> the list of MailUp groups, each one with the following keys:<ul>
+	*		<li>int <b>id</b> the id of the group</li>
+	*		<li>string <b>name</b> the name of the group</li>
+	*	</ul></li>
+	* </ul>
+	* @throws Exception Throws an Exception in case of errros.
+	*/
 	public function GetListsAndGroups() {
 		$body = $this->exec(self::CLIENT_IMPORT, 'GetNlLists', array(), $this->getAuthorizationHeader());
 		$lists = array();
@@ -899,7 +945,7 @@ class MailUp {
 				'StatusCode' => 'int>status',
 				'IsRunning' => 'bool>running',
 				'ConfirmationEmail' => 'bool>confirmationEmail',
-				'ConfirmationSent' => '>confirmationSent'
+				'ConfirmationSent' => 'bool>confirmationSent'
 			)
 		);
 	}
@@ -943,7 +989,7 @@ class MailUpImportException extends MailUpException {
 	/** Missing return code.
 	* @var int
 	*/
-	const RETURNCODE_MISSING_ = 1;
+	const RETURNCODE_MISSING = 1;
 	/** Invalid return code.
 	* @var int
 	*/
