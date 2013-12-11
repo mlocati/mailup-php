@@ -41,27 +41,43 @@ class MailUp {
 	/** Soap client identifier: MailUpImport
 	* @var string
 	*/
-	const CLIENT_IMPORT = 'MailUpImport';
+	const SOAPCLIENT_IMPORT = 'MailUpImport';
 	/** Soap client identifier: MailUpSend
 	* @var string
 	*/
-	const CLIENT_SEND = 'MailUpSend';
+	const SOAPCLIENT_SEND = 'MailUpSend';
 	/** Soap client identifier: MailUpManage
 	* @var string
 	*/
-	const CLIENT_MANAGE = 'MailUpManage';
+	const SOAPCLIENT_MANAGE = 'MailUpManage';
 	/** Soap client identifier: MailUpReport
 	* @var string
 	*/
-	const CLIENT_REPORT = 'MailUpReport';
-	/** Duration (in minutes) of the access key.
+	const SOAPCLIENT_REPORT = 'MailUpReport';
+	/** REST endpoint: console
+	* @var string
+	*/
+	const RESTENDPOINT_CONSOLE = 'ConsoleService';
+	/** REST endpoint: statistics
+	* @var string
+	*/
+	const RESTENDPOINT_STATISTICS = 'MailStatisticsService';
+	/** Duration (in minutes) of the SOAP access key.
 	* @var int
 	*/
-	const ACCESSKEY_DURATION = 60;
-	/** Does the access key expiration is being reset on use?
+	const SOAPACCESSKEY_DURATION = 60;
+	/** Does the SOAP access key expiration is being reset on use?
 	* @var bool
 	*/
-	const ACCESSKEY_RESET_DURATION_ON_USE = false;
+	const SOAPACCESSKEY_RESET_DURATION_ON_USE = false;
+	/** Duration (in minutes) of the REST access key.
+	* @var int
+	*/
+	const RESTACCESSKEY_DURATION = 14;
+	/** Does the REST access key expiration is being reset on use?
+	* @var bool
+	*/
+	const RESTACCESSKEY_RESET_DURATION_ON_USE = false;
 	/** MailUp username.
 	* @var string
 	*/
@@ -70,6 +86,14 @@ class MailUp {
 	* @var string
 	*/
 	private $password;
+	/** MailUp REST client ID.
+	* @var string
+	*/
+	private $restClientId;
+	/** MailUp REST client secret.
+	* @var string
+	*/
+	private $restClientSecret;
 	/** MailUp console url.
 	* @var string
 	*/
@@ -86,26 +110,33 @@ class MailUp {
 	* @var bool
 	*/
 	public $debug;
-	/** Current access key info.
-	* @var null|array
-	*/
-	private $accessKeyCache;
 	/** SoapClient instances.
 	* @var SoapClient[]
 	*/
-	private $clients;
+	private $soapClients;
+	/** Current SOAP access key info.
+	* @var null|array
+	*/
+	private $soapAccessKeyCache;
+	/** Current REST access key info.
+	* @var null|array
+	*/
+	private $restAccessKeyCache;
 	/** Initializes the instance.
 	* @param string $username MailUp password.
 	* @param string $password MailUp password.
 	* @param string $consoleUrl MailUp console url.
+	* @param string $restClientId MailUp REST client ID.
+	* @param string $restClientSecret MailUp REST client secret.
 	* @param int|null $consoleId [default: null] MailUp console ID (if not specified we'll try to auto-detect it).
 	* @param string $cacheFolder [default: ''] An optional folder where we can cache some data files (WARNING: should not be public, it'll contain sensitive data!).
 	* @param bool $debug [default: false] Debug enabled?
 	* @throws Exception Throws an Exception in case of parameter errros.
 	*/
-	public function __construct($username, $password, $consoleUrl, $consoleId = null, $cacheFolder = '', $debug = false) {
-		$this->clients = array();
-		$this->accessKeyCache = null;
+	public function __construct($username, $password, $consoleUrl, $restClientId, $restClientSecret, $consoleId = null, $cacheFolder = '', $debug = false) {
+		$this->soapClients = array();
+		$this->soapAccessKeyCache = null;
+		$this->restAccessKeyCache = null;
 		$username = empty($username) ? '' : @strval($username);
 		if(!strlen($username)) {
 			throw new Exception('Missing username parameter');
@@ -116,6 +147,16 @@ class MailUp {
 			throw new Exception('Missing password parameter');
 		}
 		$this->password = $password;
+		$restClientId = empty($restClientId) ? '' : @strval($restClientId);
+		if(!strlen($restClientId)) {
+			throw new Exception('Missing restClientId parameter');
+		}
+		$this->restClientId = $restClientId;
+		$restClientSecret = empty($restClientSecret) ? '' : @strval($restClientSecret);
+		if(!strlen($restClientSecret)) {
+			throw new Exception('Missing restClientSecret parameter');
+		}
+		$this->restClientSecret = $restClientSecret;
 		$consoleUrl = empty($consoleUrl) ? '' : @strval($consoleUrl);
 		if(!strlen($consoleUrl)) {
 			throw new Exception('Missing consoleUrl parameter');
@@ -161,19 +202,19 @@ class MailUp {
 		$this->debug = $debug ? true : false;
 	}
 	/** Retrieves a soap client instance.
-	* @param string $client One of the MailUp::CLIENT_ constants.
+	* @param string $client One of the MailUp::SOAPCLIENT_ constants.
 	* @return SoapClient
 	* @throws Exception Throws an Exception in case of errors.
 	*/
-	private function getClient($client) {
-		if(!array_key_exists($client, $this->clients)) {
+	private function getSoapClient($client) {
+		if(!array_key_exists($client, $this->soapClients)) {
 			$wsdlFile = dirname(__FILE__) . '/wsdl/' . preg_replace('/[^\w]/', '', $client) . '.wsdl';
 			if(!is_file($wsdlFile)) {
 				throw new Exception(sprintf('Unable to find the file %s', $wsdlFile));
 			}
 			$wsdlPlaceholders = array();
 			switch($client) {
-				case self::CLIENT_IMPORT:
+				case self::SOAPCLIENT_IMPORT:
 					$wsdlPlaceholders['[[MAILUP_CONSOLE_URL]]'] = $this->consoleUrl;
 					break;
 			}
@@ -195,7 +236,7 @@ class MailUp {
 					}
 					$wsdlFile = $tempFile;
 				}
-				$this->clients[$client] = new SoapClient(
+				$this->soapClients[$client] = new SoapClient(
 					$wsdlFile,
 					array(
 						'exceptions' => true, // Soap errors throw exceptions of type SoapFault
@@ -215,19 +256,19 @@ class MailUp {
 				throw $x;
 			}
 		}
-		return $this->clients[$client];
+		return $this->soapClients[$client];
 	}
 	/** Executes a soap call.
-	* @param string $client One of the MailUp::CLIENT_ constants.
+	* @param string $client One of the MailUp::SOAPCLIENT_ constants.
 	* @param string $method The method to call
 	* @param array $args The method arguments (named array).
 	* @param null|SoapHeader|SoapHeader[] $headers The headers to be set for the soap call
 	* @return SimpleXMLElement
 	* @throws Exception Throws an Exception in case of errros.
 	*/
-	private function exec($client, $method, $args, $headers = null, &$returnCode = null) {
+	private function execSoap($client, $method, $args, $headers = null, &$returnCode = null) {
 		$returnCode = null;
-		$sc = $this->getClient($client);
+		$sc = $this->getSoapClient($client);
 		try {
 			$sc->__setSoapHeaders(null);
 			if($headers) {
@@ -238,14 +279,14 @@ class MailUp {
 			$textResponse = $rawResponse->$responseField;
 			$xmlResponse = simplexml_load_string($textResponse, 'SimpleXMLElement', LIBXML_NOCDATA);
 			switch($client) {
-				case self::CLIENT_SEND:
-				case self::CLIENT_REPORT:
-					MailUpSRException::checkResponse($xmlResponse, $this);
+				case self::SOAPCLIENT_SEND:
+				case self::SOAPCLIENT_REPORT:
+					MailUpSRException::checkSoapResponse($xmlResponse, $this);
 					unset($xmlResponse->errorCode, $xmlResponse->errorDescription);
 					return $xmlResponse;
-				case self::CLIENT_IMPORT:
+				case self::SOAPCLIENT_IMPORT:
 					$body = $xmlResponse->mailupBody;
-					$returnCode = MailUpImportException::checkResponseBody($body, $this);
+					$returnCode = MailUpImportException::checkSoapResponseBody($body, $this);
 					unset($body->ReturnCode);
 					return $body;
 			}
@@ -260,41 +301,163 @@ class MailUp {
 			}
 		}
 	}
+	private function execRest($endPoint, $path, $verb = 'GET', $dataToSend = '') {
+		$tempFile = false;
+		try {
+			switch($endPoint) {
+				case self::RESTENDPOINT_CONSOLE:
+				case self::RESTENDPOINT_STATISTICS:
+					$url = 'https://services.mailup.com/API/v1.1/Rest/' . $endPoint . '.svc';
+					break;
+				default:
+					throw new Exception("Unknown REST endpoint: $endPoint");
+			}
+			$url .= '/' . ltrim($path, '/');
+			if(!function_exists('curl_init')) {
+				throw new Exception('cURL extension not available.');
+			}
+			$hCurl = @curl_init();
+			if($hCurl === false) {
+				throw new Exception('curl_init() failed.');
+			}
+			$errorOption = '';
+			if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_URL, $url)) {
+				$errorOption = 'CURLOPT_URL';
+			}
+			if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_RETURNTRANSFER, true)) {
+				$errorOption = 'CURLOPT_RETURNTRANSFER';
+			}
+			if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_SSL_VERIFYPEER, false)) {
+				$errorOption = 'CURLOPT_SSL_VERIFYPEER';
+			}
+			if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_SSL_VERIFYHOST, false)) {
+				$errorOption = 'CURLOPT_SSL_VERIFYHOST';
+			}
+			if(!$errorOption) {
+				switch(strtoupper($verb)) {
+					case 'POST':
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_POST, 1)) {
+							$errorOption = 'CURLOPT_POST';
+						}
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_POSTFIELDS, $dataToSend)) {
+							$errorOption = 'CURLOPT_POSTFIELDS';
+						}
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_HTTPHEADER, array('Content-type: application/json', 'Content-length: ' . strlen($dataToSend), 'Accept: application/json', 'Authorization: Bearer ' . $this->getRestAccessKey()))) {
+							$errorOption = 'CURLOPT_HTTPHEADER';
+						}
+						break;
+					case 'PUT':
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_PUT, 1)) {
+							$errorOption = 'CURLOPT_PUT';
+						}
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_HTTPHEADER, array('Content-type: application/json', 'Content-length: ' . strlen($dataToSend), 'Accept: application/json', 'Authorization: Bearer ' . $this->getRestAccessKey()))) {
+							$errorOption = 'CURLOPT_HTTPHEADER';
+						}
+						if(!$errorOption) {
+							$tempFile = @tmpfile();
+							if($tempFile === false) {
+								throw new Exception('tmpfile() failed');
+							}
+							if(@fwrite($tempFile, $dataToSend) === false) {
+								throw new Exception('fwrite() failed');
+							}
+							@fseek($tempFile, 0);
+							if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_INFILE, $tempFile)) {
+								$errorOption = 'CURLOPT_INFILE';
+							}
+						}
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_INFILESIZE, strlen($dataToSend))) {
+							$errorOption = 'CURLOPT_INFILESIZE';
+						}
+						break;
+					case 'DELETE':
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_CUSTOMREQUEST, 'DELETE')) {
+							$errorOption = 'DELETE';
+						}
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_HTTPHEADER, array('Content-type: application/json', 'Content-length: 0', 'Accept: application/json', 'Authorization: Bearer ' . $this->getRestAccessKey()))) {
+							$errorOption = 'CURLOPT_HTTPHEADER';
+						}
+						break;
+					default:
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_HTTPHEADER, array('Content-type: application/json', 'Content-length: 0', 'Accept: application/json', 'Authorization: Bearer ' . $this->getRestAccessKey()))) {
+							$errorOption = 'CURLOPT_HTTPHEADER';
+						}
+						break;
+				}
+			}
+			if($errorOption) {
+				$errorMessage = @curl_error($hCurl);
+				if(!is_string($errorMessage)) {
+					$errorMessage = '';
+				}
+				throw new Exception("curl_setopt($errorOption) failed" . (strlen($errorMessage) ? " ($errorMessage)" : '') . '.');
+			}
+			$result = @curl_exec($hCurl);
+			$code = @curl_getinfo($hCurl, CURLINFO_HTTP_CODE);
+			@curl_close($hCurl);
+			if($tempFile) {
+				@fclose($tempFile);
+				$tempFile = false;
+			}
+			if((!$code) || ($code < 200) || ($code > 299)) {
+				switch(is_numeric($code) ? $code : 0) {
+					case 401:
+						throw new Exception('Authorization error');
+					case 404:
+						throw new Exception('Remote resource not found');
+					default:
+						throw new Exception("Remote call failed with return code $code");
+				}
+			}
+			$jsResult = @json_decode($result, true);
+			if(is_null($jsResult)) {
+				throw new Exception("Result from server couldn\'t be parsed");
+			}
+			return $jsResult;
+		}
+		catch(Exception $x) {
+			if($tempFile) {
+				@fclose($tempFile);
+				$tempFile = false;
+			}
+			throw $x;
+		}
+	}
 	/** Returns some debug info associated to the last call made by a soap client.
-	* @param string $client One of the MailUp::CLIENT_ constants.
+	* @param string $client One of the MailUp::SOAPCLIENT_ constants.
 	* @return string
 	*/
 	public function getDebugInfo($client) {
-		if(!array_key_exists($client, $this->clients)) {
+		if(!array_key_exists($client, $this->soapClients)) {
 			return '';
 		}
-		$sc = $this->clients[$client];
+		$sc = $this->soapClients[$client];
 		return "\n\nRequest headers:\n" . $sc->__getLastRequestHeaders() . "\n\nRequest body:\n" . $sc->__getLastRequest() . "\n\nResponse headers:\n" . $sc->__getLastResponseHeaders() . "\n\nResponse body:\n" . $sc->__getLastResponse();
 	}
-	/** Returns the file name used as cache for the access key, or an empty string in case it's not creatable.
+	/** Returns the file name used as cache for the SOAP access key, or an empty string in case it's not creatable.
 	* @return string
 	*/
-	private function getAccessKeyCacheFilename() {
+	private function getSoapAccessKeyCacheFilename() {
 		if(strlen($this->cacheFolder) && is_dir($this->cacheFolder) && is_writable($this->cacheFolder)) {
-			return $this->cacheFolder . DIRECTORY_SEPARATOR . 'MailUp.' . preg_replace('/\W/', '', $this->username) . '.accessKey';
+			return $this->cacheFolder . DIRECTORY_SEPARATOR . 'MailUp.' . preg_replace('/\W/', '', $this->username) . '.accessKey.soap';
 		}
 		else {
 			return '';
 		}
 	}
-	/** Returns the access key that must be used by some soap call.
+	/** Returns the SOAP access key that must be used by some soap call.
 	* @param bool $forUse [default: true] Will you use it?
 	* @param bool $forUse [default: true] Generate a new access key if we did not already done so?
 	* @return string
 	* @throws Exception Throws an Exception in case of errros.
 	*/
-	private function getAccessKey($forUse = true, $generateIfNotSet = true) {
-		$timeLimit = time() - self::ACCESSKEY_DURATION * 60 - 30;
-		$cacheFile = $this->getAccessKeyCacheFilename();
-		if($this->accessKeyCache && ($this->accessKeyCache['timestamp'] <= $timeLimit)) {
-			$this->accessKeyCache = null;
+	private function getSoapAccessKey($forUse = true, $generateIfNotSet = true) {
+		$timeLimit = time() - self::SOAPACCESSKEY_DURATION * 60 - 30;
+		$cacheFile = $this->getSoapAccessKeyCacheFilename();
+		if($this->soapAccessKeyCache && ($this->soapAccessKeyCache['timestamp'] <= $timeLimit)) {
+			$this->soapAccessKeyCache = null;
 		}
-		if(!$this->accessKeyCache) {
+		if(!$this->soapAccessKeyCache) {
 			$cache = null;
 			if(strlen($cacheFile) && is_file($cacheFile)) {
 				if((($c = @file_get_contents($cacheFile)) !== false) && (is_array($c = @unserialize($c)))) {
@@ -310,28 +473,142 @@ class MailUp {
 			}
 			if(!$cache) {
 				if($generateIfNotSet) {
-					$response = $this->exec(self::CLIENT_SEND, 'LoginFromId', array('user' => $this->username, 'pwd' => $this->password, 'consoleId' => $this->consoleId));
+					$response = $this->execSoap(self::SOAPCLIENT_SEND, 'LoginFromId', array('user' => $this->username, 'pwd' => $this->password, 'consoleId' => $this->consoleId));
 					$cache = array('accessKey' => (string)$response->accessKey, 'timestamp' => time());
 				}
 			}
-			$this->accessKeyCache = $cache;
+			$this->soapAccessKeyCache = $cache;
 		}
-		if($this->accessKeyCache) {
-			if(self::ACCESSKEY_RESET_DURATION_ON_USE && $forUse) {
-				$this->accessKeyCache['timestamp'] = time();
+		if($this->soapAccessKeyCache) {
+			if(self::SOAPACCESSKEY_RESET_DURATION_ON_USE && $forUse) {
+				$this->soapAccessKeyCache['timestamp'] = time();
 			}
 			if(strlen($cacheFile)) {
-				if((self::ACCESSKEY_RESET_DURATION_ON_USE && $forUse) || (!is_file($cacheFile))) {
-					@file_put_contents($cacheFile, serialize($this->accessKeyCache));
+				if((self::SOAPACCESSKEY_RESET_DURATION_ON_USE && $forUse) || (!is_file($cacheFile))) {
+					@file_put_contents($cacheFile, serialize($this->soapAccessKeyCache));
 				}
 			}
-			return $this->accessKeyCache['accessKey'];
+			return $this->soapAccessKeyCache['accessKey'];
 		}
 		else {
 			return '';
 		}
 	}
-	/** Returns the authorization header that must be used by some soap call.
+	/** Returns the file name used as cache for the REST access key, or an empty string in case it's not creatable.
+	* @return string
+	*/
+	private function getRestAccessKeyCacheFilename() {
+		if(strlen($this->cacheFolder) && is_dir($this->cacheFolder) && is_writable($this->cacheFolder)) {
+			return $this->cacheFolder . DIRECTORY_SEPARATOR . 'MailUp.' . preg_replace('/\W/', '', $this->username) . '.accessKey.rest';
+		}
+		else {
+			return '';
+		}
+	}
+	/** Returns the REST access key that must be used by some soap call.
+	* @param bool $forUse [default: true] Will you use it?
+	* @param bool $forUse [default: true] Generate a new access key if we did not already done so?
+	* @return string
+	* @throws Exception Throws an Exception in case of errros.
+	*/
+	private function getRestAccessKey($forUse = true, $generateIfNotSet = true) {
+		$timeLimit = time() - self::RESTACCESSKEY_DURATION * 60 - 30;
+		$cacheFile = $this->getRestAccessKeyCacheFilename();
+		if($this->restAccessKeyCache && ($this->restAccessKeyCache['timestamp'] <= $timeLimit)) {
+			$this->restAccessKeyCache = null;
+		}
+		if(!$this->restAccessKeyCache) {
+			$cache = null;
+			if(strlen($cacheFile) && is_file($cacheFile)) {
+				if((($c = @file_get_contents($cacheFile)) !== false) && (is_array($c = @unserialize($c)))) {
+					if(array_key_exists('accessKey', $c) && is_string($c['accessKey']) && strlen($c['accessKey'])) {
+						if(array_key_exists('timestamp', $c) && is_int($c['timestamp']) && ($c['timestamp'] > $timeLimit)) {
+							$cache = $c;
+						}
+					}
+				}
+				if(!$cache) {
+					@unlink($cacheFile);
+				}
+			}
+			if(!$cache) {
+				if($generateIfNotSet) {
+					if(!function_exists('curl_init')) {
+						throw new Exception('cURL extension not available.');
+					}
+					$hCurl = @curl_init('https://services.mailup.com/Authorization/OAuth/Token');
+					if($hCurl === false) {
+						throw new Exception('curl_init() failed.');
+					}
+					$errorOption = '';
+					if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_RETURNTRANSFER, true)) {
+						$errorOption = 'CURLOPT_RETURNTRANSFER';
+					}
+					if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_SSL_VERIFYPEER, false)) {
+						$errorOption = 'CURLOPT_SSL_VERIFYPEER';
+					}
+					if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_SSL_VERIFYHOST, false)) {
+						$errorOption = 'CURLOPT_SSL_VERIFYHOST';
+					}
+					if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_POST, 1)) {
+						$errorOption = 'CURLOPT_POST';
+					}
+					if(!$errorOption) {
+						$postBody = 'grant_type=password'
+							. '&username=' . rawurlencode($this->username)
+							. '&password=' . rawurlencode($this->password)
+							. '&client_id='. rawurlencode($this->restClientId)
+							. '&client_secret=' . rawurlencode($this->restClientSecret)
+						;
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_HTTPHEADER, array(
+							'Content-length' => strlen($postBody),
+							'Accept' => 'application/json',
+							'Authorization' => 'Basic ' . base64_encode($this->restClientId . ':' . $this->restClientSecret)
+						))) {
+							$errorOption = 'CURLOPT_HTTPHEADER';
+						}
+						if(!$errorOption && !@curl_setopt($hCurl, CURLOPT_POSTFIELDS, $postBody)) {
+							$errorOption = 'CURLOPT_POSTFIELDS';
+						}
+					}
+					if($errorOption) {
+						$errorMessage = @curl_error($hCurl);
+						if(!is_string($errorMessage)) {
+							$errorMessage = '';
+						}
+						throw new Exception("curl_setopt($errorOption) failed" . (strlen($errorMessage) ? " ($errorMessage)" : '') . '.');
+					}
+					$result = @curl_exec($hCurl);
+					$code = @curl_getinfo($hCurl, CURLINFO_HTTP_CODE);
+					@curl_close($hCurl);
+					if(($code != 200) && ($code != 302)) {
+						throw new Exception('Authorization error');
+					}
+					$result = @json_decode($result);
+					if(!(is_object($result) && isset($result->access_token))) {
+						throw new Exception('Error in data received');
+					}
+					$cache = array('accessKey' => (string)$result->access_token, 'timestamp' => time());
+				}
+			}
+			$this->restAccessKeyCache = $cache;
+		}
+		if($this->restAccessKeyCache) {
+			if(self::RESTACCESSKEY_RESET_DURATION_ON_USE && $forUse) {
+				$this->restAccessKeyCache['timestamp'] = time();
+			}
+			if(strlen($cacheFile)) {
+				if((self::RESTACCESSKEY_RESET_DURATION_ON_USE && $forUse) || (!is_file($cacheFile))) {
+					@file_put_contents($cacheFile, serialize($this->restAccessKeyCache));
+				}
+			}
+			return $this->restAccessKeyCache['accessKey'];
+		}
+		else {
+			return '';
+		}
+	}
+	/** Returns the authorization header that must be used by some SOAP call.
 	* @return SoapHeader
 	*/
 	private function getAuthorizationHeader() {
@@ -488,11 +765,11 @@ class MailUp {
 	* @throws Exception Throws an Exception in case of errros.
 	*/
 	public function Logout() {
-		$accessKey = $this->getAccessKey(false, false);
+		$accessKey = $this->getSoapAccessKey(false, false);
 		if(strlen($accessKey)) {
-			$response = $this->exec(self::CLIENT_SEND, 'Logout', array('accessKey' => $accessKey));
-			$this->accessKeyCache = null;
-			$cacheFile = $this->getAccessKeyCacheFilename();
+			$response = $this->execSoap(self::SOAPCLIENT_SEND, 'Logout', array('accessKey' => $accessKey));
+			$this->soapAccessKeyCache = null;
+			$cacheFile = $this->getSoapAccessKeyCacheFilename();
 			if(strlen($cacheFile) && is_file($cacheFile)) {
 				@unlink($cacheFile);
 			}
@@ -507,7 +784,7 @@ class MailUp {
 	*/
 	public function GetLists() {
 		$lists = array();
-		$response = $this->exec(self::CLIENT_SEND, 'GetLists', array('accessKey' => self::getAccessKey()));
+		$response = $this->execSoap(self::SOAPCLIENT_SEND, 'GetLists', array('accessKey' => self::getSoapAccessKey()));
 		foreach($response->lists->list as $list) {
 			$lists[] = self::xmlToArray($list, array('listID' => 'int>id', 'listName' => 'string>name'));
 		}
@@ -525,7 +802,7 @@ class MailUp {
 	*/
 	public function GetMessages($listID) {
 		$messages = array();
-		$response = $this->exec(self::CLIENT_SEND, 'GetMessages', array('accessKey' => self::getAccessKey(), 'listID' => $listID));
+		$response = $this->execSoap(self::SOAPCLIENT_SEND, 'GetMessages', array('accessKey' => self::getSoapAccessKey(), 'listID' => $listID));
 		foreach($response->list->newsletters->newsletter as $message) {
 			$messages[] = self::xmlToArray($message, array('newsletterID' => 'int>id', 'subject' => 'string', 'note' => 'string', 'creationdate' => 'datetime>creationDate'));
 		}
@@ -543,7 +820,7 @@ class MailUp {
 	*/
 	public function GetNewsletters($listID) {
 		$newsletters = array();
-		$response = $this->exec(self::CLIENT_SEND, 'GetNewsletters', array('accessKey' => self::getAccessKey(), 'listID' => $listID));
+		$response = $this->execSoap(self::SOAPCLIENT_SEND, 'GetNewsletters', array('accessKey' => self::getSoapAccessKey(), 'listID' => $listID));
 		foreach($response->list->newsletters->newsletter as $newsletter) {
 			$newsletters[] = self::xmlToArray($newsletter, array('newsletterID' => 'int>id', 'subject' => 'string', 'note' => 'string', 'creationdate' => 'datetime>creationDate'));
 		}
@@ -561,7 +838,7 @@ class MailUp {
 	* @throws Exception Throws an Exception in case of errros.
 	*/
 	public function GetNewsletterCode($listID, $newsletterID) {
-		$response = $this->exec(self::CLIENT_SEND, 'GetNewsletterCode', array('accessKey' => self::getAccessKey(), 'listID' => $listID, 'newsletterID' => $newsletterID, 'isTemplate' => false));
+		$response = $this->execSoap(self::SOAPCLIENT_SEND, 'GetNewsletterCode', array('accessKey' => self::getSoapAccessKey(), 'listID' => $listID, 'newsletterID' => $newsletterID, 'isTemplate' => false));
 		unset($response->listID, $response->newsletterID);
 		$code = self::xmlToArray($response, array('newsletterSubject' => 'string>subject', 'newsletterHeader' => 'string>header', 'newsletterBody' => 'string>body', 'newsletterCode' => 'string>code'));
 		if(!(strlen($code['subject']) || strlen($code['body']) || strlen($code['code']))) {
@@ -570,7 +847,7 @@ class MailUp {
 		return $code;
 	}
 	public function GetReportByMessage($listID, $messageID) {
-		$response = $this->exec(self::CLIENT_REPORT, 'ReportByMessageEN', array('accessKey' => self::getAccessKey(), 'listID' => $listID, 'messageID' => $messageID));
+		$response = $this->execSoap(self::SOAPCLIENT_REPORT, 'ReportByMessageEN', array('accessKey' => self::getSoapAccessKey(), 'listID' => $listID, 'messageID' => $messageID));
 		$report = array();
 		$report['click'] = array('total' => 0, 'url' => array());
 		foreach($response->Clicks as $clicks) {
@@ -601,7 +878,7 @@ class MailUp {
 	* @throws Exception Throws an Exception in case of errros.
 	*/
 	public function GetListsAndGroups() {
-		$body = $this->exec(self::CLIENT_IMPORT, 'GetNlLists', array(), $this->getAuthorizationHeader());
+		$body = $this->execSoap(self::SOAPCLIENT_IMPORT, 'GetNlLists', array(), $this->getAuthorizationHeader());
 		$lists = array();
 		foreach($body->Lists->List as $xList) {
 			$list = self::xmlToArray($xList, array('@idList' => 'int>id', '@listGUID' => 'string>guid', '@listName' => 'string>name'));
@@ -633,7 +910,7 @@ class MailUp {
 		if(!$list) {
 			throw new Exception("Unable to find the list with id $idList");
 		}
-		$body = $this->exec(self::CLIENT_IMPORT, 'CreateGroup', array('idList' => $idList, 'listGUID' => $list['guid'], 'newGroupName' => $newGroupName), $this->getAuthorizationHeader(), $idGroup);
+		$body = $this->execSoap(self::SOAPCLIENT_IMPORT, 'CreateGroup', array('idList' => $idList, 'listGUID' => $list['guid'], 'newGroupName' => $newGroupName), $this->getAuthorizationHeader(), $idGroup);
 		return array('id' => $idGroup, 'name' => $newGroupName);
 	}
 	/**
@@ -893,7 +1170,7 @@ class MailUp {
 			}
 		}
 		$send['xmlDoc'] = $xSubscribers->asXML();
-		$this->exec(self::CLIENT_IMPORT, 'NewImportProcess', $send, $this->getAuthorizationHeader(), $idProcess);
+		$this->execSoap(self::SOAPCLIENT_IMPORT, 'NewImportProcess', $send, $this->getAuthorizationHeader(), $idProcess);
 		return $idProcess;
 	}
 	public function StartImportProcess($idList, $idProcess) {
@@ -911,7 +1188,7 @@ class MailUp {
 		$send['idList'] = $list['id'];
 		$send['listGUID'] = $list['guid'];
 		$send['idProcess'] = $idProcess;
-		$this->exec(self::CLIENT_IMPORT, 'StartProcess', $send, $this->getAuthorizationHeader());
+		$this->execSoap(self::SOAPCLIENT_IMPORT, 'StartProcess', $send, $this->getAuthorizationHeader());
 	}
 	public function GetImportProcessDetails($idList, $idProcess) {
 		$send = array();
@@ -928,7 +1205,7 @@ class MailUp {
 		$send['idList'] = $list['id'];
 		$send['listGUID'] = $list['guid'];
 		$send['idProcess'] = $idProcess;
-		$body = $this->exec(self::CLIENT_IMPORT, 'GetProcessDetails', $send, $this->getAuthorizationHeader());
+		$body = $this->execSoap(self::SOAPCLIENT_IMPORT, 'GetProcessDetails', $send, $this->getAuthorizationHeader());
 		return self::xmlToArray(
 			$body->ImportProcess,
 			array(
@@ -949,6 +1226,94 @@ class MailUp {
 			)
 		);
 	}
+	/** Returns message recipients/views/bounces/unsubscriptions/clicks count
+	* @param int $idMessage
+	* @param string $which 'Recipients' or 'Views' or 'Bounces' or 'Unsubscriptions' or 'Clicks'
+	* @return int
+	*/
+	public function getNewsletterUsersCount($idMessage, $which) {
+		if(!is_int($idMessage)) {
+			$idMessage = is_numeric($idMessage) ? @intval($idMessage) : 0;
+		}
+		if($idMessage <= 0) {
+			throw new Exception('The message specified message id is wrong');
+		}
+		if(is_string($which)) {
+			switch($which) {
+				case 'Recipients':
+				case 'Views':
+				case 'Bounces':
+				case 'Unsubscriptions':
+				case 'Clicks':
+					return $this->execRest(self::RESTENDPOINT_STATISTICS, "Message/$idMessage/Count/$which");
+			}
+		}
+		throw new Exception('Invalid $which value in call to ' . __FUNCTION__ . ': ' . $which);
+	}
+	/** Returns message recipients/views/bounces/unsubscriptions/clicks list
+	* @param int $idMessage
+	* @param string $which 'Recipients' or 'Views' or 'Bounces' or 'Unsubscriptions' or 'Clicks'
+	* @param int $pageNumber = 0 Page to retrieve (starts from 0)
+	* @param int $pageSize = 20 Page size
+	* @return array Keys:<ul>
+	*	<li>bool <b>IsPaginated</b></li>
+	*	<li>int <b>PageNumber</b> starting from 0</li>
+	*	<li>int <b>PageSize</b></li>
+	*	<li>int <b>Skipped</b></li>
+	*	<li>int <b>TotalElementsCount</b></li>
+	*	<li>array <b>Items</b> a list of arrays, each one with these keys:<ul>
+	*		<li>string <b>Email</b></li>
+	*		<li>int <b>IdRecipient</b></li>
+	*		<li><i>for Bounces</i>: string <b>Type</b>. See http://assistenza.mailup.it/KB/a262/i-would-like-more-details-on-the-different-types-of-bounces.aspx</li>
+	*		<li><i>for Clicks</i>: int <b>Count</b></li>
+	*	</ul></li>
+	* </ul>
+	*/
+	public function getNewsletterUsersList($idMessage, $which, $pageNumber = 0, $pageSize = 20) {
+		if(!is_int($idMessage)) {
+			$idMessage = is_numeric($idMessage) ? @intval($idMessage) : 0;
+		}
+		if($idMessage <= 0) {
+			throw new Exception('The message specified message id is wrong');
+		}
+		$i = is_int($pageNumber) ? $pageNumber : (is_numeric($pageNumber) ? @intval($pageNumber) : -1);
+		if($i < 0) {
+			throw new Exception('Invalid $pageNumber value in call to ' . __FUNCTION__ . ': ' . $pageNumber);
+		}
+		$pageNumber = $i;
+		$i = is_int($pageSize) ? $pageSize : (is_numeric($pageSize) ? @intval($pageSize) : -1);
+		if($i <= 0) {
+			throw new Exception('Invalid $pageSize value in call to ' . __FUNCTION__ . ': ' . $pageSize);
+		}
+		$pageSize = $i;
+		if(strlen(is_string($which))) {
+			switch($which) {
+				case 'Recipients':
+				case 'Views':
+				case 'Bounces':
+				case 'Unsubscriptions':
+				case 'Clicks':
+					$list = $this->execRest(self::RESTENDPOINT_STATISTICS, "Message/$idMessage/List/$which?pageSize=$pageSize&pageNumber=$pageNumber");
+					if(!empty($list['Items'])) {
+						foreach(array_keys($list['Items']) as $i) {
+							unset($list['Items'][$i]['IdMessage']);
+							$list['Items'][$i]['Email'] = (isset($list['Items'][$i]['Email']) && is_string($list['Items'][$i]['Email'])) ? trim($list['Items'][$i]['Email']) : '';
+							$list['Items'][$i]['IdRecipient'] = (isset($list['Items'][$i]['IdRecipient']) && is_numeric($list['Items'][$i]['IdRecipient'])) ? @intval($list['Items'][$i]['IdRecipient']) : 0;
+							switch($which) {
+								case 'Bounces':
+									$list['Items'][$i]['Type'] = (isset($list['Items'][$i]['Type']) && is_string($list['Items'][$i]['Type'])) ? trim($list['Items'][$i]['Type']) : '';
+									break;
+								case 'Clicks':
+									$list['Items'][$i]['Count'] = (isset($list['Items'][$i]['Count']) && is_numeric($list['Items'][$i]['Count'])) ? @intval($list['Items'][$i]['Count']) : 0;
+									break;
+							}
+						}
+					}
+					return $list;
+			}
+		}
+		throw new Exception('Invalid $which value in call to ' . __FUNCTION__ . ': ' . $which);
+	}
 }
 
 /** Base exception related to the MailUp instance. */
@@ -962,7 +1327,7 @@ class MailUpSRException extends MailUpException {
 	* @param MailUp $instance
 	* @throw MailUpSRException
 	*/
-	public static function checkResponse($xmlResponse, $instance = null) {
+	public static function checkSoapResponse($xmlResponse, $instance = null) {
 		$errorCode = @trim((string)$xmlResponse->errorCode);
 		if(!strlen($errorCode)) {
 			throw new MailUpSRException('Missing error code');
@@ -1123,7 +1488,7 @@ class MailUpImportException extends MailUpException {
 	* @return int
 	* @throw MailUpImportException
 	*/
-	public static function checkResponseBody($body, $instance = null) {
+	public static function checkSoapResponseBody($body, $instance = null) {
 		$returnCode = @trim((string)$body->ReturnCode);
 		if(!strlen($returnCode)) {
 			throw self::fromReturnCode(self::RETURNCODE_MISSING);
@@ -1133,7 +1498,7 @@ class MailUpImportException extends MailUpException {
 		}
 		$returnCode = @intval($returnCode);
 		if($returnCode < 0) {
-			throw self::fromReturnCode($returnCode, ($instance && $instance->debug) ? $instance->getDebugInfo(MailUp::CLIENT_IMPORT) : '');
+			throw self::fromReturnCode($returnCode, ($instance && $instance->debug) ? $instance->getDebugInfo(MailUp::SOAPCLIENT_IMPORT) : '');
 		}
 		return $returnCode;
 	}
