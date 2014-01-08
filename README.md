@@ -24,4 +24,4 @@ $mailup = new MailUp(
 var_dump($mailup->GetLists());
 var_dump($mailup->GetMessages(1));
 
-`
+```
