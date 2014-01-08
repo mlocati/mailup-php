@@ -25,3 +25,7 @@ var_dump($mailup->GetLists());
 var_dump($mailup->GetMessages(1));
 
 ```
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mlocati/mailup-php/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
